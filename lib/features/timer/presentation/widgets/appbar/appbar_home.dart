@@ -1,14 +1,144 @@
 import 'package:cube_timer_oficial/features/timer/data/database.dart';
+import 'package:cube_timer_oficial/shared/providers/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AppBarHome extends StatelessWidget {
-  final List<Category> categories;
+class AppBarHome extends ConsumerStatefulWidget {
+  final bool isTimeRunning;
 
-  const AppBarHome({super.key, required this.categories});
+  const AppBarHome({
+    super.key,
+    required this.isTimeRunning,
+  });
+
+  @override
+  ConsumerState<AppBarHome> createState() => _AppBarHomeState();
+}
+
+class _AppBarHomeState extends ConsumerState<AppBarHome> 
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<Offset> _slideAnimation;
+  late Animation<double> _fadeAnimation;
+
+  int actualPageIndex = 0;
+  bool isRotated = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      reverseDuration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+    _slideAnimation =
+        Tween<Offset>(begin: Offset.zero, end: const Offset(0, -1)).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeInOut,
+          ),
+        );
+    _fadeAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOutBack,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: Placeholder());
+    if (widget.isTimeRunning) {
+      _animationController.forward();
+    } else {
+      _animationController.reverse();
+    }
+
+    final selectedCategoryAsync = ref.watch(selectedCategoryProvider);
+    final selectedCubeTypeAsync = ref.watch(selectedCubeTypeProvider);
+
+    return SafeArea(
+      top: true,
+      child: SlideTransition(
+        position: _slideAnimation,
+        child: FadeTransition(
+          opacity: _fadeAnimation,
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                _tittleCategory(
+                  Colors.black,
+                  selectedCategoryAsync,
+                  selectedCubeTypeAsync,
+                ),
+                // Add more widgets here as needed
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Row _tittleCategory(
+    Color textColor,
+    AsyncValue<Category?> selectedCategoryAsync,
+    AsyncValue<CubeType?> selectedCubeTypeAsync,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            selectedCubeTypeAsync.when(
+              data: (cubeType) => Text(
+                cubeType?.type ?? '-',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18.0,
+                  color: textColor,
+                ),
+              ),
+              loading: () => const SizedBox(
+                width: 18,
+                height: 18,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+              error: (e, st) => const Icon(Icons.error, color: Colors.red),
+            ),
+            Center(
+              child: selectedCategoryAsync.when(
+                data: (category) {
+                  final name = category?.name ?? '-';
+                  return Text(
+                    name.length > 12 ? '${name.substring(0, 12)}...' : name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 12.0, color: textColor),
+                  );
+                },
+                loading: () => const SizedBox(
+                  width: 12,
+                  height: 12,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+                error: (e, st) => const Icon(Icons.error, color: Colors.red),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(width: 5),
+        Icon(Icons.arrow_drop_down, color: textColor),
+      ],
+    );
   }
 }
 
@@ -177,9 +307,8 @@ class AppBarHome extends StatelessWidget {
 //                               isRotated = !isRotated;
 //                             });
 //                           },
-//                         ),
-//                       )
-//                     : const SizedBox(width: 40),
+//                         )
+//                       : const SizedBox(width: 40),
 //                 Container(
 //                   alignment: Alignment.center,
 //                   width: 35.0,

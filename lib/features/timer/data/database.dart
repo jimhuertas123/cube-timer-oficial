@@ -9,8 +9,13 @@ part 'database.g.dart'; // Generated file
 
 @DriftDatabase(tables: [CubeTypes, Categories, TimeRecords])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection()){
-    _insertDefaultCubeTypes();
+  AppDatabase._() : super(_openConnection());
+
+  static Future<AppDatabase> create() async {
+    final db = AppDatabase._();
+    await db._insertDefaultCubeTypes();
+    await db._insertDefaultNormalCategories();
+    return db;
   }
 
   @override
@@ -31,13 +36,29 @@ class AppDatabase extends _$AppDatabase {
       for (final type in defaultTypes) {
         await into(cubeTypes).insert(CubeTypesCompanion(type: Value(type)));
       }
+    }
+  }
 
-      final insertedCubeTypes = await select(cubeTypes).get();
-      for (final cubeType in insertedCubeTypes) {
+  ///insert a 'Normal' category for each cube type if not present
+  Future<void> _insertDefaultNormalCategories() async {
+    final insertedCubeTypes = await select(cubeTypes).get();
+    for (final cubeType in insertedCubeTypes) {
+      final existingNormal =
+          await (select(categories)..where(
+                (c) =>
+                    c.cubeTypeId.equals(cubeType.id) & c.name.equals('normal'),
+              ))
+              .getSingleOrNull();
+      if (existingNormal == null) {
         await into(categories).insert(
           CategoriesCompanion(
             name: Value('normal'),
             cubeTypeId: Value(cubeType.id),
+            shortestTime: const Value.absent(),
+            mean: const Value.absent(),
+            m_2: const Value.absent(),
+            deviation: const Value.absent(),
+            count: const Value.absent(),
           ),
         );
       }

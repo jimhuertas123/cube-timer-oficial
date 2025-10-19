@@ -15,7 +15,7 @@ class HomeScreen extends ConsumerWidget {
     switch (categoriesAsync) {
       case AsyncValue(:final value?):
         if (Platform.isIOS) {
-          return HomeIOSPage(categories: value);
+          return HomeIOSPage();
         } else if (Platform.isAndroid) {
           return HomeAndroidPage(categories: value);
         } else {

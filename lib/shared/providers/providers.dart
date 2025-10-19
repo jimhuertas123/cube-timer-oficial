@@ -1,1 +1,6 @@
 export 'db.provider.dart';
+export 'categories.provider.dart';
+export 'theme_providers/theme_providers.dart';
+export 'time_records.provider.dart';
+export 'selected_category.provider.dart';
+export 'selected_cube_type.provider.dart';

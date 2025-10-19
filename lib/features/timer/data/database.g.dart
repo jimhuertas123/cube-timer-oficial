@@ -735,9 +735,7 @@ class $TimeRecordsTable extends TimeRecords
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES categories (id)',
-    ),
+    $customConstraints: 'REFERENCES categories(id)',
   );
   static const VerificationMeta _millisecondsMeta = const VerificationMeta(
     'milliseconds',
@@ -782,7 +780,6 @@ class $TimeRecordsTable extends TimeRecords
     'comment',
     aliasedName,
     true,
-    additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 100),
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
@@ -1458,27 +1455,6 @@ final class $$CategoriesTableReferences
       manager.$state.copyWith(prefetchedData: [item]),
     );
   }
-
-  static MultiTypedResultKey<$TimeRecordsTable, List<TimeRecord>>
-  _timeRecordsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
-    db.timeRecords,
-    aliasName: $_aliasNameGenerator(
-      db.categories.id,
-      db.timeRecords.categoryId,
-    ),
-  );
-
-  $$TimeRecordsTableProcessedTableManager get timeRecordsRefs {
-    final manager = $$TimeRecordsTableTableManager(
-      $_db,
-      $_db.timeRecords,
-    ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_timeRecordsRefsTable($_db));
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
 }
 
 class $$CategoriesTableFilterComposer
@@ -1546,31 +1522,6 @@ class $$CategoriesTableFilterComposer
           ),
     );
     return composer;
-  }
-
-  Expression<bool> timeRecordsRefs(
-    Expression<bool> Function($$TimeRecordsTableFilterComposer f) f,
-  ) {
-    final $$TimeRecordsTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.timeRecords,
-      getReferencedColumn: (t) => t.categoryId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TimeRecordsTableFilterComposer(
-            $db: $db,
-            $table: $db.timeRecords,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
   }
 }
 
@@ -1696,31 +1647,6 @@ class $$CategoriesTableAnnotationComposer
     );
     return composer;
   }
-
-  Expression<T> timeRecordsRefs<T extends Object>(
-    Expression<T> Function($$TimeRecordsTableAnnotationComposer a) f,
-  ) {
-    final $$TimeRecordsTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.timeRecords,
-      getReferencedColumn: (t) => t.categoryId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TimeRecordsTableAnnotationComposer(
-            $db: $db,
-            $table: $db.timeRecords,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
 }
 
 class $$CategoriesTableTableManager
@@ -1736,7 +1662,7 @@ class $$CategoriesTableTableManager
           $$CategoriesTableUpdateCompanionBuilder,
           (Category, $$CategoriesTableReferences),
           Category,
-          PrefetchHooks Function({bool cubeTypeId, bool timeRecordsRefs})
+          PrefetchHooks Function({bool cubeTypeId})
         > {
   $$CategoriesTableTableManager(_$AppDatabase db, $CategoriesTable table)
     : super(
@@ -1797,73 +1723,47 @@ class $$CategoriesTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback:
-              ({cubeTypeId = false, timeRecordsRefs = false}) {
-                return PrefetchHooks(
-                  db: db,
-                  explicitlyWatchedTables: [
-                    if (timeRecordsRefs) db.timeRecords,
-                  ],
-                  addJoins:
-                      <
-                        T extends TableManagerState<
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic,
-                          dynamic
-                        >
-                      >(state) {
-                        if (cubeTypeId) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.cubeTypeId,
-                                    referencedTable: $$CategoriesTableReferences
-                                        ._cubeTypeIdTable(db),
-                                    referencedColumn:
-                                        $$CategoriesTableReferences
-                                            ._cubeTypeIdTable(db)
-                                            .id,
-                                  )
-                                  as T;
-                        }
+          prefetchHooksCallback: ({cubeTypeId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (cubeTypeId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.cubeTypeId,
+                                referencedTable: $$CategoriesTableReferences
+                                    ._cubeTypeIdTable(db),
+                                referencedColumn: $$CategoriesTableReferences
+                                    ._cubeTypeIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
 
-                        return state;
-                      },
-                  getPrefetchedDataCallback: (items) async {
-                    return [
-                      if (timeRecordsRefs)
-                        await $_getPrefetchedData<
-                          Category,
-                          $CategoriesTable,
-                          TimeRecord
-                        >(
-                          currentTable: table,
-                          referencedTable: $$CategoriesTableReferences
-                              ._timeRecordsRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$CategoriesTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).timeRecordsRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.categoryId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                    ];
+                    return state;
                   },
-                );
+              getPrefetchedDataCallback: (items) async {
+                return [];
               },
+            );
+          },
         ),
       );
 }
@@ -1880,7 +1780,7 @@ typedef $$CategoriesTableProcessedTableManager =
       $$CategoriesTableUpdateCompanionBuilder,
       (Category, $$CategoriesTableReferences),
       Category,
-      PrefetchHooks Function({bool cubeTypeId, bool timeRecordsRefs})
+      PrefetchHooks Function({bool cubeTypeId})
     >;
 typedef $$TimeRecordsTableCreateCompanionBuilder =
     TimeRecordsCompanion Function({
@@ -1903,30 +1803,6 @@ typedef $$TimeRecordsTableUpdateCompanionBuilder =
       Value<int> penalty,
     });
 
-final class $$TimeRecordsTableReferences
-    extends BaseReferences<_$AppDatabase, $TimeRecordsTable, TimeRecord> {
-  $$TimeRecordsTableReferences(super.$_db, super.$_table, super.$_typedResult);
-
-  static $CategoriesTable _categoryIdTable(_$AppDatabase db) =>
-      db.categories.createAlias(
-        $_aliasNameGenerator(db.timeRecords.categoryId, db.categories.id),
-      );
-
-  $$CategoriesTableProcessedTableManager get categoryId {
-    final $_column = $_itemColumn<int>('category_id')!;
-
-    final manager = $$CategoriesTableTableManager(
-      $_db,
-      $_db.categories,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
 class $$TimeRecordsTableFilterComposer
     extends Composer<_$AppDatabase, $TimeRecordsTable> {
   $$TimeRecordsTableFilterComposer({
@@ -1938,6 +1814,11 @@ class $$TimeRecordsTableFilterComposer
   });
   ColumnFilters<int> get id => $composableBuilder(
     column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get categoryId => $composableBuilder(
+    column: $table.categoryId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1965,29 +1846,6 @@ class $$TimeRecordsTableFilterComposer
     column: $table.penalty,
     builder: (column) => ColumnFilters(column),
   );
-
-  $$CategoriesTableFilterComposer get categoryId {
-    final $$CategoriesTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.categoryId,
-      referencedTable: $db.categories,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$CategoriesTableFilterComposer(
-            $db: $db,
-            $table: $db.categories,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
 }
 
 class $$TimeRecordsTableOrderingComposer
@@ -2001,6 +1859,11 @@ class $$TimeRecordsTableOrderingComposer
   });
   ColumnOrderings<int> get id => $composableBuilder(
     column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get categoryId => $composableBuilder(
+    column: $table.categoryId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -2028,29 +1891,6 @@ class $$TimeRecordsTableOrderingComposer
     column: $table.penalty,
     builder: (column) => ColumnOrderings(column),
   );
-
-  $$CategoriesTableOrderingComposer get categoryId {
-    final $$CategoriesTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.categoryId,
-      referencedTable: $db.categories,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$CategoriesTableOrderingComposer(
-            $db: $db,
-            $table: $db.categories,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
 }
 
 class $$TimeRecordsTableAnnotationComposer
@@ -2064,6 +1904,11 @@ class $$TimeRecordsTableAnnotationComposer
   });
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get categoryId => $composableBuilder(
+    column: $table.categoryId,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<int> get milliseconds => $composableBuilder(
     column: $table.milliseconds,
@@ -2081,29 +1926,6 @@ class $$TimeRecordsTableAnnotationComposer
 
   GeneratedColumn<int> get penalty =>
       $composableBuilder(column: $table.penalty, builder: (column) => column);
-
-  $$CategoriesTableAnnotationComposer get categoryId {
-    final $$CategoriesTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.categoryId,
-      referencedTable: $db.categories,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$CategoriesTableAnnotationComposer(
-            $db: $db,
-            $table: $db.categories,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
 }
 
 class $$TimeRecordsTableTableManager
@@ -2117,9 +1939,12 @@ class $$TimeRecordsTableTableManager
           $$TimeRecordsTableAnnotationComposer,
           $$TimeRecordsTableCreateCompanionBuilder,
           $$TimeRecordsTableUpdateCompanionBuilder,
-          (TimeRecord, $$TimeRecordsTableReferences),
+          (
+            TimeRecord,
+            BaseReferences<_$AppDatabase, $TimeRecordsTable, TimeRecord>,
+          ),
           TimeRecord,
-          PrefetchHooks Function({bool categoryId})
+          PrefetchHooks Function()
         > {
   $$TimeRecordsTableTableManager(_$AppDatabase db, $TimeRecordsTable table)
     : super(
@@ -2169,54 +1994,9 @@ class $$TimeRecordsTableTableManager
                 penalty: penalty,
               ),
           withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$TimeRecordsTableReferences(db, table, e),
-                ),
-              )
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),
-          prefetchHooksCallback: ({categoryId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (categoryId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.categoryId,
-                                referencedTable: $$TimeRecordsTableReferences
-                                    ._categoryIdTable(db),
-                                referencedColumn: $$TimeRecordsTableReferences
-                                    ._categoryIdTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
+          prefetchHooksCallback: null,
         ),
       );
 }
@@ -2231,9 +2011,12 @@ typedef $$TimeRecordsTableProcessedTableManager =
       $$TimeRecordsTableAnnotationComposer,
       $$TimeRecordsTableCreateCompanionBuilder,
       $$TimeRecordsTableUpdateCompanionBuilder,
-      (TimeRecord, $$TimeRecordsTableReferences),
+      (
+        TimeRecord,
+        BaseReferences<_$AppDatabase, $TimeRecordsTable, TimeRecord>,
+      ),
       TimeRecord,
-      PrefetchHooks Function({bool categoryId})
+      PrefetchHooks Function()
     >;
 
 class $AppDatabaseManager {
