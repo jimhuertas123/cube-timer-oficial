@@ -1,1 +1,52 @@
 include: package:flutter_lints/flutter.yaml
+analyzer:
+  plugins:
+    - custom_lint
+custom_lint:
+  rules:
+    - missing_provider_scope
+    - prefer_provider_over_final
+    - avoid_manual_provider_initialization
+    - avoid_public_provider_parameters
+    - avoid_ref_inside_provider
+    - avoid_provider_declared_inside_class
+    - avoid_unnecessary_provider_scope
+    - avoid_provider_ref_in_widget_constructor
+    - avoid_provider_ref_in_widget_build
+    - avoid_provider_ref_in_widget_lifecycle
+    - avoid_provider_ref_in_widget_methods
+    - avoid_provider_ref_in_widget_fields
+    - avoid_provider_ref_in_widget_state
+    - avoid_provider_ref_in_widget_state_methods
+    - avoid_provider_ref_in_widget_state_fields
+    - avoid_provider_ref_in_widget_state_lifecycle
+    - avoid_provider_ref_in_widget_state_build
+    - avoid_provider_ref_in_widget_state_constructor
+    - avoid_provider_ref_in_widget_state_dispose
+    - avoid_provider_ref_in_widget_state_initState
+    - avoid_provider_ref_in_widget_state_didChangeDependencies
+    - avoid_provider_ref_in_widget_state_didUpdateWidget
+    - avoid_provider_ref_in_widget_state_reassemble
+    - avoid_provider_ref_in_widget_state_deactivate
+    - avoid_provider_ref_in_widget_state_setState
+    - avoid_provider_ref_in_widget_state_context
+    - avoid_provider_ref_in_widget_state_mounted
+    - avoid_provider_ref_in_widget_state_widget
+    - avoid_provider_ref_in_widget_state_element
+    - avoid_provider_ref_in_widget_state_renderObject
+    - avoid_provider_ref_in_widget_state_ancestorWidgetOfExactType
+    - avoid_provider_ref_in_widget_state_ancestorStateOfType
+    - avoid_provider_ref_in_widget_state_ancestorRenderObjectOfType
+    - avoid_provider_ref_in_widget_state_ancestorElementOfType
+    - avoid_provider_ref_in_widget_state_ancestorWidgetOfType
+    - avoid_provider_ref_in_widget_state_ancestorStateOfType
+    - avoid_provider_ref_in_widget_state_ancestorRenderObjectOfType
+    - avoid_provider_ref_in_widget_state_ancestorElementOfType
+    - avoid_provider_ref_in_widget_state_ancestorWidgetOfType
+    - avoid_provider_ref_in_widget_state_ancestorStateOfType
+    - avoid_provider_ref_in_widget_state_ancestorRenderObjectOfType
+    - avoid_provider_ref_in_widget_state_ancestorElementOfType
+    - avoid_provider_ref_in_widget_state_ancestorWidgetOfType
+    - avoid_provider_ref_in_widget_state_ancestorStateOfType
+    - avoid_provider_ref_in_widget_state_ancestorRenderObjectOfType
+    - avoid_provider_ref_in_widget_state_ancestorElementOfType

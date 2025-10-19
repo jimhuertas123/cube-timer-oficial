@@ -31,6 +31,16 @@ class AppDatabase extends _$AppDatabase {
       for (final type in defaultTypes) {
         await into(cubeTypes).insert(CubeTypesCompanion(type: Value(type)));
       }
+
+      final insertedCubeTypes = await select(cubeTypes).get();
+      for (final cubeType in insertedCubeTypes) {
+        await into(categories).insert(
+          CategoriesCompanion(
+            name: Value('normal'),
+            cubeTypeId: Value(cubeType.id),
+          ),
+        );
+      }
     }
   }
 
