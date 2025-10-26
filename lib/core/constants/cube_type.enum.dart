@@ -1,4 +1,4 @@
-enum CubeType {
+enum CubeTypeEnum {
   twoByTwo,
   threeByThree,
   fourByFour,

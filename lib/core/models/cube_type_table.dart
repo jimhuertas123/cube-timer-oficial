@@ -6,9 +6,9 @@ class CubeTypes extends Table {
   TextColumn get type => text().withLength(min: 1, max: 20)();
 }
 
-extension CubeTypeExtension on CubeType {
-  static CubeType fromName(String name) =>
-      CubeType.values.firstWhere((e) => e.name == name);
+extension CubeTypeExtension on CubeTypeEnum {
+  static CubeTypeEnum fromName(String name) =>
+      CubeTypeEnum.values.firstWhere((e) => e.name == name);
 
   String get name => toString().split('.').last;
 }

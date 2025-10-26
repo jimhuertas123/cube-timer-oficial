@@ -23,8 +23,8 @@ final materialThemeProvider = Provider<ThemeData>((ref) {
 
       final base = ThemeData(
         brightness: s.isDarkmode ? Brightness.dark : Brightness.light,
-        primaryColor: theme.patternColor.primaryColor,
-        scaffoldBackgroundColor: theme.patternColor.secondaryColor,
+        primaryColor: theme.bgPatternColor.primaryColor,
+        scaffoldBackgroundColor: theme.bgPatternColor.secondaryColor,
         appBarTheme: AppBarTheme(backgroundColor: theme.appBarColor),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: theme.bottomBarColor,

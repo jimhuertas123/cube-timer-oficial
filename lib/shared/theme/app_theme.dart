@@ -9,14 +9,14 @@ class ColorBackgroundPair {
 }
 
 class ColorAppTheme {
-  final ColorBackgroundPair patternColor;
+  final ColorBackgroundPair bgPatternColor;
   final bool isDarkmode;
   final Color appBarColor;
   final Color bottomBarColor;
   final String name;
 
   const ColorAppTheme({
-    required this.patternColor,
+    required this.bgPatternColor,
     required this.appBarColor,
     required this.bottomBarColor,
     required this.isDarkmode,
@@ -34,8 +34,8 @@ class TextTheme {
 const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //1
-    isDarkmode: false,
-    patternColor: ColorBackgroundPair(
+    isDarkmode: true,
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFF0062ff),
       secondaryColor: Color(0xFF3b12ff),
     ),
@@ -46,7 +46,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //2
     isDarkmode: false,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFF0D0D0D),
       secondaryColor: Color(0xFF0D0D0D),
     ),
@@ -57,7 +57,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //3
     isDarkmode: true,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFFFFFFFF),
       secondaryColor: Color(0xFFFFFFFF),
     ),
@@ -68,7 +68,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //4
     isDarkmode: false,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFF607D8B),
       secondaryColor: Color(0xFF455A64),
     ),
@@ -79,7 +79,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //5
     isDarkmode: true,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFFfcd6e3),
       secondaryColor: Color(0xFFaaf0ed),
     ),
@@ -90,7 +90,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //6
     isDarkmode: false,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFF8e78ff),
       secondaryColor: Color(0xFFfc7d7b),
     ),
@@ -101,7 +101,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //7
     isDarkmode: false,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFFED1E79),
       secondaryColor: Color(0xFF662D8C),
     ),
@@ -112,7 +112,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //8
     isDarkmode: false,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFF673AB7),
       secondaryColor: Color(0xff512DA8),
     ),
@@ -123,7 +123,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //9
     isDarkmode: false,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xffFF577E),
       secondaryColor: Color(0xFFFD61C0),
     ),
@@ -134,7 +134,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //10
     isDarkmode: true,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFF18ff97),
       secondaryColor: Color(0xFF24f594),
     ),
@@ -145,7 +145,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //11
     isDarkmode: true,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFF3AFAFA),
       secondaryColor: Color(0xFF42F7CD),
     ),
@@ -156,7 +156,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //12
     isDarkmode: true,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFFFFFEFF),
       secondaryColor: Color(0xFFD7FFFE),
     ),
@@ -167,7 +167,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //13
     isDarkmode: true,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFF6cf63e),
       secondaryColor: Color(0xFF15ff8e),
     ),
@@ -178,7 +178,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //14
     isDarkmode: false,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFF000000),
       secondaryColor: Color(0xFF000000),
     ),
@@ -189,7 +189,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //15
     isDarkmode: true,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFFFFEB7E),
       secondaryColor: Color(0xFFFFFD69),
     ),
@@ -200,7 +200,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //16
     isDarkmode: true,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFFb2f9ff),
       secondaryColor: Color(0xFFefebbe),
     ),
@@ -211,7 +211,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //17
     isDarkmode: true,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFFfbb74c),
       secondaryColor: Color(0xFFFF5656),
     ),
@@ -222,7 +222,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //18
     isDarkmode: true,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFFfccb90),
       secondaryColor: Color(0xFFd57eeb),
     ),
@@ -233,7 +233,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //19
     isDarkmode: false,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFF920EE6),
       secondaryColor: Color(0xFF6304E9),
     ),
@@ -244,7 +244,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //20
     isDarkmode: false,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFFED1C24),
       secondaryColor: Color(0xFFFF6219),
     ),
@@ -255,7 +255,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //21
     isDarkmode: false,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFF5C3C30),
       secondaryColor: Color(0xFF422A24),
     ),
@@ -266,7 +266,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //22
     isDarkmode: true,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFFa8ff78),
       secondaryColor: Color(0xFF78ffd6),
     ),
@@ -277,7 +277,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //23
     isDarkmode: true,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFF00FFA1),
       secondaryColor: Color(0xFF00FFFF),
     ),
@@ -288,7 +288,7 @@ const appColorTheme = <ColorAppTheme>[
   ColorAppTheme(
     //24
     isDarkmode: true,
-    patternColor: ColorBackgroundPair(
+    bgPatternColor: ColorBackgroundPair(
       primaryColor: Color(0xFFc6ffbd),
       secondaryColor: Color(0xFFffffff),
     ),

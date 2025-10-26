@@ -7,11 +7,13 @@ environment:
   sdk: ^3.9.2
 
 dependencies:
+  cupertino_icons: ^1.0.8
   drift: ^2.28.2
   drift_flutter: ^0.2.7
   flutter:
     sdk: flutter
   flutter_riverpod: ^3.0.1
+  modal_bottom_sheet: ^3.0.0
   path: ^1.9.1
   path_provider: ^2.1.5
   shared_preferences: ^2.5.3
@@ -27,3 +29,29 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/icons/
+    - assets/category/
+    - assets/drawer_templates/
+
+  fonts:
+    - family: Lato
+      fonts:
+        - asset: fonts/Lato-Bold.ttf
+    - family: Poppins
+      fonts:
+        - asset: fonts/Poppins-Regular.otf
+        - asset: fonts/Poppins-Light.otf
+        - asset: fonts/Poppins-SemiBold.otf
+        - asset: fonts/Poppins-Bold.otf
+    - family: Quicksand
+      fonts:
+        - asset: fonts/Quicksand_Regular.ttf
+        - asset: fonts/Quicksand_SemiBold.ttf
+        - asset: fonts/Quicksand_Book.otf
+        - asset: fonts/Quicksand_Light.otf
+        - asset: fonts/Quicksand_Bold.ttf
+        - asset: fonts/Quicksand_Medium.ttf
+    - family: CubeIcon
+      fonts:
+        - asset: fonts/CubeIcon.ttf

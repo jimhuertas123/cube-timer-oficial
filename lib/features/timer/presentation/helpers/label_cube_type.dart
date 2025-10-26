@@ -1,7 +1,5 @@
-import 'package:cube_timer_oficial/features/timer/data/database.dart';
-
-String labelCubeType(CubeType cubeType) {
-  switch (cubeType.type) {
+String labelCubeType(String? cubeType) {
+  switch (cubeType) {
     case 'threeByThree':
       return '3x3';
     case 'twoByTwo':
@@ -14,15 +12,7 @@ String labelCubeType(CubeType cubeType) {
       return '6x6';
     case 'sevenBySeven':
       return '7x7';
-    case 'pyraminx':
-      return 'Pyraminx';
-    case 'megaminx':
-      return 'Megaminx';
-    case 'skewb':
-      return 'Skewb';
-    case 'clock':
-      return 'Clock';
-    default:
-      return cubeType.type;
+    default: 
+      return '-';
   }
 }
