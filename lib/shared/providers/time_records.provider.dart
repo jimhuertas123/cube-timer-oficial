@@ -6,7 +6,9 @@ final timeRecordListProvider = FutureProvider((ref) async {
   final db = await ref.watch(dbProvider.future);
   return db.getAllTimeRecords();
 });
-final addTimeRecordProvider = Provider<Future<void> Function(TimeRecord)>((ref) {
+final addTimeRecordProvider = Provider<Future<void> Function(TimeRecord)>((
+  ref,
+) {
   return (timeRecord) async {
     final db = await ref.read(dbProvider.future);
     await db.addTimeRecord(timeRecord);

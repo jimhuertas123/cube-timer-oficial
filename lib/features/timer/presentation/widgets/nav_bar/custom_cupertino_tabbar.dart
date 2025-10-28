@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomCupertinoTabBar extends StatelessWidget {
-
   final int currentIndex;
   final ValueChanged<int> onTap;
   final Color backgroundColor;
@@ -24,14 +23,11 @@ class CustomCupertinoTabBar extends StatelessWidget {
     this.inactiveColor = CupertinoColors.inactiveGray,
   });
 
-
   @override
   Widget build(BuildContext context) {
     double paddingBottom = MediaQuery.of(context).padding.bottom - 10;
     return Container(
-      padding: EdgeInsets.only(
-        bottom: paddingBottom,
-      ),
+      padding: EdgeInsets.only(bottom: paddingBottom),
       height: height,
       decoration: BoxDecoration(
         color: backgroundColor,

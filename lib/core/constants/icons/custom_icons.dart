@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/CubeIcon.ttf
 ///
-/// 
+///
 ///
 library;
 // ignore_for_file: constant_identifier_names
@@ -24,6 +24,14 @@ class CubeIcon {
   static const _kFontFam = 'CubeIcon';
   static const String? _kFontPkg = null;
 
-  static const IconData oll_black = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData pll_black = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData oll_black = IconData(
+    0xe800,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData pll_black = IconData(
+    0xe801,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 }

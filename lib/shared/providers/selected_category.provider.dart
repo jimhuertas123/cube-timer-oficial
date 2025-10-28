@@ -9,7 +9,7 @@ class SelectedCategoryNotifier extends AsyncNotifier<Category?> {
   Future<Category?> build() async {
     final prefs = await SharedPreferences.getInstance();
     final lastCategoryId = prefs.getInt('selected_category_id');
-    final categories = await ref.watch(categoryListProvider.future);
+    final categories = await ref.watch(categoryListProviderHelper.future);
     // helper: try to find last selected, else first 'normal' category
     Category selected = categories.firstWhere(
       (c) => c.id == lastCategoryId,

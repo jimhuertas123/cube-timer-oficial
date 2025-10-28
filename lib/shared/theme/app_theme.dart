@@ -5,7 +5,10 @@ class ColorBackgroundPair {
   final Color primaryColor;
   final Color secondaryColor;
 
-  const ColorBackgroundPair({required this.primaryColor, required this.secondaryColor});
+  const ColorBackgroundPair({
+    required this.primaryColor,
+    required this.secondaryColor,
+  });
 }
 
 class ColorAppTheme {
@@ -28,7 +31,7 @@ class TextTheme {
   final Color? colorText;
   final String name;
 
-  const TextTheme({ this.colorText, required this.name});
+  const TextTheme({this.colorText, required this.name});
 }
 
 const appColorTheme = <ColorAppTheme>[
@@ -299,7 +302,7 @@ const appColorTheme = <ColorAppTheme>[
 ];
 
 const appTextTheme = <TextTheme>[
-  TextTheme( name: "Default"),
+  TextTheme(name: "Default"),
   TextTheme(colorText: Color(0xFFFF1744), name: "Pessoa"),
   TextTheme(colorText: Color(0xFFFF2A9F), name: "Lou"),
   TextTheme(colorText: Color(0xFFFF4500), name: "Burgess"),

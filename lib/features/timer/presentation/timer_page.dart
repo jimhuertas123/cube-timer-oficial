@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cube_timer_oficial/features/timer/data/database.dart';
 import 'package:cube_timer_oficial/features/timer/presentation/platform_page/platform_page.dart';
 import 'package:cube_timer_oficial/shared/providers/providers.dart';
 
@@ -7,19 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categoriesAsync = ref.watch(categoryListProvider);
-    final cubeTypesAsync = ref.watch(cubeTypesProvider);
+    final selectedCubeTypeAsync = ref.watch(selectedCubeTypeProvider);
 
     // combine all async states
-    final isLoading = categoriesAsync.isLoading  || cubeTypesAsync.isLoading;
-    final hasError = categoriesAsync.hasError || cubeTypesAsync.hasError;
-    final error = categoriesAsync.error ?? cubeTypesAsync.error;
+    final isLoading = selectedCubeTypeAsync.isLoading;
+    final hasError = selectedCubeTypeAsync.hasError;
+    final error = selectedCubeTypeAsync.error;
 
     if (isLoading) {
       return const CupertinoScaffold(
@@ -38,12 +37,7 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 12),
               ElevatedButton(
                 onPressed: () {
-                  // ignore: unused_result
-                  ref.refresh(categoryListProvider);
-                  // ignore: unused_result
-                  ref.refresh(selectedCategoryProvider);
-                  // ignore: unused_result
-                  ref.refresh(selectedCubeTypeProvider);
+                  final _ = ref.refresh(selectedCubeTypeProvider);
                 },
                 child: const Text('Retry'),
               ),
@@ -54,23 +48,19 @@ class HomeScreen extends ConsumerWidget {
     }
 
     // All loaded
-    final categories = categoriesAsync.value;
-    final cubeTypes = cubeTypesAsync.value;
+    final cubeType = selectedCubeTypeAsync.value;
 
     if (Platform.isIOS) {
       return TimerIOSPage(
-        cubeTypes: cubeTypes ?? [],
-        categories: categories ?? [],
+        selectedCubeType: cubeType ?? CubeType(id: 1, type: '3x3'),
       );
     } else if (Platform.isAndroid) {
       return TimerAndroidPage(
-        cubeTypes: cubeTypes ?? [],
-        categories: categories ?? [],
+        selectedCubeType: cubeType ?? CubeType(id: 1, type: '3x3'),
       );
     } else {
       return TimerDesktopPage(
-        categories: categories ?? [],
-        cubeTypes: cubeTypes ?? [],
+        selectedCubeType: cubeType ?? CubeType(id: 1, type: '3x3'),
       );
     }
   }

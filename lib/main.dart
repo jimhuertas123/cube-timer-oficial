@@ -45,10 +45,7 @@ class MainApp extends ConsumerWidget {
         },
       );
     } else {
-      return MaterialApp(
-        theme: materialTheme,
-        home: HomeScreen(),
-      );
+      return MaterialApp(theme: materialTheme, home: HomeScreen());
     }
   }
 }

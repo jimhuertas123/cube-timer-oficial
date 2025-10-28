@@ -12,19 +12,13 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 final GlobalKey<ScaffoldState> scaffoldKeyIos = GlobalKey<ScaffoldState>();
 
 class TimerIOSPage extends ConsumerStatefulWidget {
-  final List<CubeType> cubeTypes;
-  final List<Category> categories;
+  final CubeType selectedCubeType;
 
-  const TimerIOSPage({
-    super.key, 
-    required this.categories, 
-    required this.cubeTypes
-  });
+  const TimerIOSPage({super.key, required this.selectedCubeType});
 
   @override
   ConsumerState<TimerIOSPage> createState() => _TimerIOSPageState();
 }
-
 
 class _TimerIOSPageState extends ConsumerState<TimerIOSPage> {
   bool isTimeRunning = false;
@@ -35,9 +29,9 @@ class _TimerIOSPageState extends ConsumerState<TimerIOSPage> {
     final cupertinoTheme = ref.watch(cupertinoThemeProvider);
     final gradientColors = cupertinoTheme.gradientColors;
     final Color textColor =
-        cupertinoTheme.themeData.textTheme.textStyle.color ?? CupertinoColors.black;
-    final isDarkmode =
-        cupertinoTheme.themeData.brightness == Brightness.dark;
+        cupertinoTheme.themeData.textTheme.textStyle.color ??
+        CupertinoColors.black;
+    final isDarkmode = cupertinoTheme.themeData.brightness == Brightness.dark;
 
     return Stack(
       children: [
@@ -57,89 +51,71 @@ class _TimerIOSPageState extends ConsumerState<TimerIOSPage> {
           child: AppBarHome(
             actualPageIndex: _selectedIndex,
             isTimeRunning: isTimeRunning,
-            onConfigTabPressed: () {
-              showCupertinoModalBottomSheet(
-                context: context,
-                builder: (context) => CupertinoPageScaffold(
-                  navigationBar: CupertinoNavigationBar(
-                    middle: Text('First Modal'),
-                  ),
-                  child: Center(
-                    child: CupertinoButton(
-                      child: Text('Open Second Modal'),
-                      onPressed: () {
-                        showCupertinoModalBottomSheet(
-                          context: context,
-                          builder: (context) => CupertinoPageScaffold(
-                            navigationBar: CupertinoNavigationBar(
-                              middle: Text('Second Modal'),
-                            ),
-                            child: Center(
-                              child: Text('This is the second modal'),
-                            ),
+            onConfigTabPressed: () => showCupertinoModalBottomSheet(
+              context: context,
+              builder: (context) => CupertinoPageScaffold(
+                navigationBar: CupertinoNavigationBar(
+                  middle: Text('First Modal'),
+                ),
+                child: Center(
+                  child: CupertinoButton(
+                    child: Text('Open Second Modal'),
+                    onPressed: () {
+                      showCupertinoModalBottomSheet(
+                        context: context,
+                        builder: (context) => CupertinoPageScaffold(
+                          navigationBar: CupertinoNavigationBar(
+                            middle: Text('Second Modal'),
                           ),
-                        );
-                      },
-                    ),
+                          child: Center(
+                            child: Text('This is the second modal'),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
-              );
-            },
+              ),
+            ),
             onTitlePressed: () => showCupertinoDialog(
               barrierDismissible: true,
               barrierColor: CupertinoColors.black.withAlpha(80),
               context: context,
               builder: (context) => Center(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 0),
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
-                decoration: BoxDecoration(
-                  color: CupertinoColors.white,
-                  borderRadius: BorderRadius.circular(22),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Select a puzzle',
-                      style: TextStyle(
-                        color: CupertinoColors.black,
-                        fontFamily: 'Quicksand',
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                child: Container(
+                  width: 400,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 0,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 0,
+                  ),
+                  decoration: BoxDecoration(
+                    color: CupertinoColors.white,
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Select a puzzle',
+                        style: TextStyle(
+                          color: CupertinoColors.black,
+                          fontFamily: 'Quicksand',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 12),
-                    PuzzleSelection(cubeTypes: widget.cubeTypes),
-                    SizedBox(height: 12),
-                  ],
+                      SizedBox(height: 12),
+                      PuzzleSelection(),
+                      SizedBox(height: 12),
+                    ],
+                  ),
                 ),
               ),
             ),
-                // builder: (context) => CustomAlertDialog(
-                //   enableHeight: false,
-                //   tittleContent: Container(
-                //     padding: const EdgeInsets.only(top: 10, bottom: 0),
-                //     child: Center(
-                //       child: Text("Select a puzzle",
-                //           style: TextStyle(
-                //             fontSize: 18,
-                //             fontWeight: FontWeight.bold,
-                //           )),
-                //     ),
-                //   ),
-                //   fontTittleSize: 20.0,
-                //   context: context,
-                //   insetPadding: const EdgeInsets.symmetric(horizontal: 30),
-                //   contentPadding: const EdgeInsets.only(
-                //       right: 0, left: 0, top: 0, bottom: 0),
-                //   content: <Widget>[
-                //     PuzzleSelection(
-                //       cubeTypes: widget.cubeTypes,
-                //     ),
-                //   ],
-                // )
-              ),
           ),
         ),
         SafeArea(
@@ -149,12 +125,9 @@ class _TimerIOSPageState extends ConsumerState<TimerIOSPage> {
             padding: const EdgeInsets.only(top: 70.0, bottom: 40.0),
             child: Column(
               children: <Widget>[
-                if (_selectedIndex == 0)
-                  CronometerSubpage(),
-                if (_selectedIndex == 1)
-                  TimesSubpage(),
-                if (_selectedIndex == 2)
-                  StatisticsSubpage()
+                if (_selectedIndex == 0) CronometerSubpage(),
+                if (_selectedIndex == 1) TimesSubpage(),
+                if (_selectedIndex == 2) StatisticsSubpage(),
               ],
             ),
           ),
@@ -171,9 +144,7 @@ class _TimerIOSPageState extends ConsumerState<TimerIOSPage> {
               });
             },
             activeColor: textColor,
-            inactiveColor: !isDarkmode
-                ? Colors.black54
-                : Colors.white54,
+            inactiveColor: !isDarkmode ? Colors.black54 : Colors.white54,
             backgroundColor: cupertinoTheme.bottomAppbarColor,
             icons: const [
               CupertinoIcons.home,

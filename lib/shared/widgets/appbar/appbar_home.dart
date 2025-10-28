@@ -1,23 +1,27 @@
 import 'package:cube_timer_oficial/features/timer/data/database.dart';
-import 'package:cube_timer_oficial/features/timer/presentation/widgets/appbar/widgets/title_category.dart';
+import 'package:cube_timer_oficial/shared/widgets/appbar/widgets/title_category.dart';
 import 'package:cube_timer_oficial/shared/providers/providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'widgets/dialogs_content/ios_showdialog_categories.dart';
+
 class AppBarHome extends ConsumerWidget {
   final bool isTimeRunning;
   final int actualPageIndex;
-  final VoidCallback onConfigTabPressed;
-  final VoidCallback onTitlePressed;
+  final bool hideActions;
+  final VoidCallback? onConfigTabPressed;
+  final VoidCallback? onTitlePressed;
 
   const AppBarHome({
     super.key,
     required this.isTimeRunning,
-    required this.onConfigTabPressed,
     required this.actualPageIndex,
-    required this.onTitlePressed,
+    this.hideActions = false,
+    this.onConfigTabPressed,
+    this.onTitlePressed,
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,9 +30,10 @@ class AppBarHome extends ConsumerWidget {
       data: (cubeType) => AppBarHomeData(
         isTimeRunning: isTimeRunning,
         actualPageIndex: actualPageIndex,
-        onConfigTabPressed: onConfigTabPressed,
-        onTitlePressed: onTitlePressed,
+        onConfigTabPressed: onConfigTabPressed ?? () {},
+        onTitlePressed: onTitlePressed ?? () {},
         selectedCubeType: cubeType ?? CubeType(id: 1, type: '3x3'),
+        hideActions: hideActions,
       ),
       loading: () => const SizedBox(
         width: 18,
@@ -46,6 +51,7 @@ class AppBarHomeData extends ConsumerStatefulWidget {
   final int actualPageIndex;
   final VoidCallback onConfigTabPressed;
   final VoidCallback onTitlePressed;
+  final bool hideActions;
 
   const AppBarHomeData({
     super.key,
@@ -54,6 +60,7 @@ class AppBarHomeData extends ConsumerStatefulWidget {
     required this.actualPageIndex,
     required this.onTitlePressed,
     required this.selectedCubeType,
+    this.hideActions = false,
   });
 
   @override
@@ -188,14 +195,24 @@ class _AppBarHomeDataState extends ConsumerState<AppBarHomeData>
                               ),
                             )
                           : const SizedBox(width: 40),
-                      Container(
-                        alignment: Alignment.center,
-                        width: 35.0,
-                        child: IconButton(
-                          iconSize: 25.0,
-                          icon: Icon(Icons.category_outlined, color: textColor),
-                          onPressed:
-                              () {}, //() async =>showAlertDialogNewCategory(context),),
+                      Visibility(
+                        visible: !widget.hideActions,
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: 35.0,
+                          child: IconButton(
+                            iconSize: 25.0,
+                            icon: Icon(
+                              Icons.category_outlined,
+                              color: textColor,
+                            ),
+                            onPressed: () => showCupertinoDialog(
+                              barrierDismissible: true,
+                              barrierColor: CupertinoColors.black.withAlpha(80),
+                              context: context,
+                              builder: (context) => ShowDialogCategories(),
+                            ),
+                          ),
                         ),
                       ),
                       const SizedBox(width: 15),

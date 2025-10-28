@@ -20,11 +20,11 @@ class NavBar extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _NavBarState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _NavBarState();
 }
 
-class _NavBarState extends ConsumerState<NavBar> with SingleTickerProviderStateMixin {
+class _NavBarState extends ConsumerState<NavBar>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _fadeAnimation;

@@ -1,14 +1,15 @@
-import 'package:cube_timer_oficial/features/timer/data/database.dart';
+import 'package:cube_timer_oficial/shared/providers/providers.dart';
 import 'package:cube_timer_oficial/shared/widgets/button_splash/button_splash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PuzzleSelection extends StatelessWidget {
-  final List<CubeType> cubeTypes;
-
-  const PuzzleSelection({super.key, required this.cubeTypes});
+class PuzzleSelection extends ConsumerWidget {
+  const PuzzleSelection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cubeTypes = ref.watch(cubeTypesSyncProvider);
+
     return GridView.builder(
       key: const Key('puzzle_selection'),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

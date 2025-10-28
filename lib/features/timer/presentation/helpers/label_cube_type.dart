@@ -12,7 +12,7 @@ String labelCubeType(String? cubeType) {
       return '6x6';
     case 'sevenBySeven':
       return '7x7';
-    default: 
+    default:
       return '-';
   }
 }

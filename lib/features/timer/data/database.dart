@@ -67,26 +67,12 @@ class AppDatabase extends _$AppDatabase {
 
   //Categories CRUD
   Future<List<Category>> getAllCategories() => select(categories).get();
-  Future<void> addCategory(Category category) => into(categories).insert(
-    CategoriesCompanion(
-      name: Value(category.name),
-      cubeTypeId: Value(category.cubeTypeId),
-      shortestTime: Value(category.shortestTime),
-      mean: Value(category.mean),
-      m_2: Value(category.m_2),
-      deviation: Value(category.deviation),
-      count: Value(category.count),
-    ),
-  );
+  Future<void> addCategory(CategoriesCompanion category) =>
+      into(categories).insert(category);
   Future<void> deleteCategory(int id) =>
       (delete(categories)..where((c) => c.id.equals(id))).go();
-  Future<void> updateCategory(int id, {String? name, int? mean}) async {
-    await (update(categories)..where((c) => c.id.equals(id))).write(
-      CategoriesCompanion(
-        name: name != null ? Value(name) : const Value.absent(),
-        mean: mean != null ? Value(mean) : const Value.absent(),
-      ),
-    );
+  Future<void> updateCategory(int id, CategoriesCompanion companion) async {
+    await (update(categories)..where((c) => c.id.equals(id))).write(companion);
   }
 
   //TimeRecords CRUD
@@ -120,4 +106,3 @@ LazyDatabase _openConnection() {
     return NativeDatabase.createInBackground(file, logStatements: true);
   });
 }
-

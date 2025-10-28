@@ -1,4 +1,4 @@
-  import 'package:cube_timer_oficial/features/timer/presentation/helpers/helpers.dart';
+import 'package:cube_timer_oficial/features/timer/presentation/helpers/helpers.dart';
 import 'package:cube_timer_oficial/shared/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,18 +6,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class TitleCategory extends ConsumerWidget {
   final Color textColor;
 
-  const TitleCategory({
-    super.key,
-    required this.textColor,
-  });
+  const TitleCategory({super.key, required this.textColor});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedCategoryAsync = ref.watch(selectedCategoryProvider);
     final selectedCubeTypeAsync = ref.watch(selectedCubeTypeProvider);
 
-    final isLoading = selectedCategoryAsync.isLoading || selectedCubeTypeAsync.isLoading;
-    final hasError = selectedCategoryAsync.hasError || selectedCubeTypeAsync.hasError;
+    final isLoading =
+        selectedCategoryAsync.isLoading || selectedCubeTypeAsync.isLoading;
+    final hasError =
+        selectedCategoryAsync.hasError || selectedCubeTypeAsync.hasError;
 
     if (isLoading) {
       return const SizedBox(
@@ -26,7 +25,7 @@ class TitleCategory extends ConsumerWidget {
         child: CircularProgressIndicator(strokeWidth: 2),
       );
     }
-    
+
     if (hasError) {
       return const Icon(Icons.error, color: Colors.red);
     }
