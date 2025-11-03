@@ -5,12 +5,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'categories.provider.dart';
 
 class SelectedCategoryNotifier extends AsyncNotifier<Category?> {
+  // You must provide the current cubeTypeId when using this notifier
+  int? _cubeTypeId;
+
+  void setCubeTypeId(int cubeTypeId) {
+    _cubeTypeId = cubeTypeId;
+  }
+
   @override
   Future<Category?> build() async {
     final prefs = await SharedPreferences.getInstance();
-    final lastCategoryId = prefs.getInt('selected_category_id');
+    // You must set _cubeTypeId before calling build
+    if (_cubeTypeId == null) throw StateError('CubeTypeId not set');
+    final key = 'selected_category_id_${_cubeTypeId}';
+    final lastCategoryId = prefs.getInt(key);
     final categories = await ref.watch(categoryListProviderHelper.future);
-    // helper: try to find last selected, else first 'normal' category
     Category selected = categories.firstWhere(
       (c) => c.id == lastCategoryId,
       orElse: () {
@@ -30,12 +39,18 @@ class SelectedCategoryNotifier extends AsyncNotifier<Category?> {
 
   Future<void> setSelected(Category category) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('selected_category_id', category.id);
+    if (_cubeTypeId == null) throw StateError('CubeTypeId not set');
+    final key = 'selected_category_id_$_cubeTypeId';
+    await prefs.setInt(key, category.id);
     state = AsyncValue.data(category);
   }
 }
 
 final selectedCategoryProvider =
-    AsyncNotifierProvider<SelectedCategoryNotifier, Category?>(
-      SelectedCategoryNotifier.new,
-    );
+    AsyncNotifierProvider.family<SelectedCategoryNotifier, Category?, int>((
+      cubeTypeId,
+    ) {
+      final notifier = SelectedCategoryNotifier();
+      notifier.setCubeTypeId(cubeTypeId);
+      return notifier;
+    });

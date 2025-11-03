@@ -39,7 +39,7 @@ const appColorTheme = <ColorAppTheme>[
     //1
     isDarkmode: true,
     bgPatternColor: ColorBackgroundPair(
-      primaryColor: Color(0xFF0062ff),
+      primaryColor: Color(0xFF1959FF),
       secondaryColor: Color(0xFF3b12ff),
     ),
     appBarColor: Color(0xff0045f6),

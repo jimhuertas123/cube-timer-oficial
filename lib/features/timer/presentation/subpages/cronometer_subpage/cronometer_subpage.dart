@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:cube_timer_oficial/features/timer/presentation/subpages/cronometer_subpage/platform_subpage/platform_subpage.dart';
+import 'package:cube_timer_oficial/shared/platform_device/platform_device.dart';
 import 'package:flutter/cupertino.dart';
 
 class CronometerSubpage extends StatelessWidget {
@@ -8,9 +7,9 @@ class CronometerSubpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS) {
+    if (isIOSDevice) {
       return CronometerIosSubpage();
-    } else if (Platform.isAndroid) {
+    } else if (isAndroidDevice) {
       return CronometerAndroidSubpage();
     } else {
       return CronometerDesktopSubpage();

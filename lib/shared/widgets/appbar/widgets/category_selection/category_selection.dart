@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:cube_timer_oficial/shared/platform_device/platform_device.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'platform_specific/android_category_selection.dart';
@@ -11,9 +11,9 @@ class CategorySelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS) {
+    if (isIOSDevice) {
       return IosCategorySelection(selectedCategoryId: selectedCategoryId);
-    } else if (Platform.isAndroid) {
+    } else if (isAndroidDevice) {
       return AndroidCategorySelection(selectedCategoryId: selectedCategoryId);
     } else {
       return AndroidCategorySelection(selectedCategoryId: selectedCategoryId);

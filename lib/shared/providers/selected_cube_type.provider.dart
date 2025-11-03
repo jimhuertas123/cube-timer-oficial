@@ -32,6 +32,31 @@ class SelectedCubeTypeNotifier extends AsyncNotifier<CubeType?> {
   Future<void> setSelected(CubeType cubeType) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('selected_cube_type_id', cubeType.id);
+
+    // Also update selected category for this cubeType
+    // Find the last selected category for this cubeType, or fallback
+    final db = await ref.watch(dbProvider.future);
+    final categories = await db.select(db.categories).get();
+    Category? selectedCategory;
+    try {
+      selectedCategory = categories.firstWhere(
+        (c) => c.cubeTypeId == cubeType.id && c.name == 'normal',
+      );
+    } catch (_) {
+      selectedCategory = categories.isNotEmpty
+          ? categories.firstWhere(
+              (c) => c.cubeTypeId == cubeType.id,
+              orElse: () => categories.first,
+            )
+          : null;
+    }
+    if (selectedCategory != null) {
+      await prefs.setInt(
+        'selected_category_id_${cubeType.id}',
+        selectedCategory.id,
+      );
+    }
+
     state = AsyncValue.data(cubeType);
   }
 }

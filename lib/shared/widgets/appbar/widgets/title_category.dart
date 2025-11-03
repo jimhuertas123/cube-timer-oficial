@@ -1,4 +1,5 @@
 import 'package:cube_timer_oficial/features/timer/presentation/helpers/helpers.dart';
+import 'package:cube_timer_oficial/shared/platform_device/platform_device.dart';
 import 'package:cube_timer_oficial/shared/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,8 +11,9 @@ class TitleCategory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedCategoryAsync = ref.watch(selectedCategoryProvider);
-    final selectedCubeTypeAsync = ref.watch(selectedCubeTypeProvider);
+  final selectedCubeTypeAsync = ref.watch(selectedCubeTypeProvider);
+  final cubeTypeId = selectedCubeTypeAsync.value?.id ?? 0;
+  final selectedCategoryAsync = ref.watch(selectedCategoryProvider(cubeTypeId));
 
     final isLoading =
         selectedCategoryAsync.isLoading || selectedCubeTypeAsync.isLoading;
@@ -31,10 +33,12 @@ class TitleCategory extends ConsumerWidget {
     }
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
-          padding: const EdgeInsets.only(left: 65.0),
+          padding: isAndroidDevice
+              ? EdgeInsets.only(left: 58, top: 2)
+              : EdgeInsets.zero,
           child: Column(
             children: <Widget>[
               selectedCubeTypeAsync.when(
@@ -42,7 +46,7 @@ class TitleCategory extends ConsumerWidget {
                   '${labelCubeType(cubeType?.type)} Cube',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    fontSize: 21.0,
+                    fontSize: isAndroidDevice ? 18 : 21.0,
                     fontFamily: 'Quicksand',
                     color: textColor,
                   ),
@@ -63,7 +67,7 @@ class TitleCategory extends ConsumerWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         fontFamily: 'Quicksand',
                         color: textColor,
                       ),
@@ -81,7 +85,7 @@ class TitleCategory extends ConsumerWidget {
           ),
         ),
         const SizedBox(width: 5),
-        Icon(Icons.arrow_drop_down, color: textColor),
+        Icon(Icons.arrow_drop_down, color: textColor, size: 20),
       ],
     );
   }

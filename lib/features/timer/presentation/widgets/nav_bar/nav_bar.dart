@@ -7,6 +7,7 @@ class NavBar extends ConsumerStatefulWidget {
   final Color activeIconColor;
   final Color inactiveIconColor;
   final bool isTimerRunning;
+  final int actualIndexPage;
   final PageController pageController;
   final void Function(int) onTap;
   const NavBar({
@@ -17,6 +18,7 @@ class NavBar extends ConsumerStatefulWidget {
     required this.pageController,
     required this.isTimerRunning,
     required this.onTap,
+    required this.actualIndexPage,
   });
 
   @override
@@ -57,8 +59,6 @@ class _NavBarState extends ConsumerState<NavBar>
 
   @override
   Widget build(BuildContext context) {
-    int actualIndexPage = 0;
-
     if (widget.isTimerRunning) {
       _animationController.forward();
     } else {
@@ -74,7 +74,7 @@ class _NavBarState extends ConsumerState<NavBar>
                 backgroundColor: widget.backgroundColor,
                 activeIconColor: widget.activeIconColor,
                 inactiveIconColor: widget.inactiveIconColor,
-                actualIndexPage: actualIndexPage,
+                actualIndexPage: widget.actualIndexPage,
                 pageController: widget.pageController,
                 onTap: widget.onTap,
               ),
@@ -89,7 +89,7 @@ class _NavBarState extends ConsumerState<NavBar>
                 activeIconColor: widget.activeIconColor,
                 inactiveIconColor: widget.inactiveIconColor,
                 pageController: widget.pageController,
-                actualIndexPage: actualIndexPage,
+                actualIndexPage: widget.actualIndexPage,
                 onTap: widget.onTap,
               ),
             ),
@@ -216,8 +216,8 @@ class _AndroidBottomNavBarState extends State<AndroidBottomNavBar> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
+          topLeft: Radius.circular(23.0),
+          topRight: Radius.circular(23.0),
         ),
         boxShadow: [
           BoxShadow(
@@ -228,11 +228,11 @@ class _AndroidBottomNavBarState extends State<AndroidBottomNavBar> {
           ),
         ],
       ),
-      height: 40,
+      height: 45,
       child: ClipRRect(
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
+          topLeft: Radius.circular(23.0),
+          topRight: Radius.circular(23.0),
         ),
         child: BottomNavigationBar(
           selectedItemColor: widget.activeIconColor,

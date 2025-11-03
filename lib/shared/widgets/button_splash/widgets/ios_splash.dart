@@ -7,12 +7,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// **IOS**: animation IOS scale entire button with animation container (still pending).
 /// didnt exist original animation, but agree making it like long press animation in ios
 /// splash oversize scaling the entire button.
-class IOSButtonSplashRow extends ConsumerStatefulWidget {
+class IOSButtonSplash extends ConsumerStatefulWidget {
   final int id;
   final CubeType cubeType;
   final void Function(int id) onPress;
 
-  const IOSButtonSplashRow({
+  const IOSButtonSplash({
     super.key,
     required this.id,
     required this.cubeType,
@@ -21,10 +21,10 @@ class IOSButtonSplashRow extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _IOSButtonSplashRowState();
+      _IOSButtonSplashState();
 }
 
-class _IOSButtonSplashRowState extends ConsumerState<IOSButtonSplashRow>
+class _IOSButtonSplashState extends ConsumerState<IOSButtonSplash>
     with TickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;

@@ -14,7 +14,6 @@ class IosCategorySelection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    debugPrint(selectedCategoryId.toString());
     final categories = ref.watch(categoriesByCubeTypeProvider);
     return Center(
       child: Container(
@@ -104,8 +103,9 @@ class IosCategorySelection extends ConsumerWidget {
                   if (selectedCategoryId == category.id) {
                     return;
                   }
+                  final cubeTypeId = category.cubeTypeId;
                   ref
-                      .read(selectedCategoryProvider.notifier)
+                      .read(selectedCategoryProvider(cubeTypeId).notifier)
                       .setSelected(category);
                   Navigator.of(context).pop();
                 },

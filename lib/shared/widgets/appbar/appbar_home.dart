@@ -1,4 +1,5 @@
 import 'package:cube_timer_oficial/features/timer/data/database.dart';
+import 'package:cube_timer_oficial/shared/platform_device/platform_device.dart';
 import 'package:cube_timer_oficial/shared/widgets/appbar/widgets/title_category.dart';
 import 'package:cube_timer_oficial/shared/providers/providers.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'widgets/dialogs_content/ios_showdialog_categories.dart';
+import 'widgets/dialogs_content/showdialog_categories.dart';
 
 class AppBarHome extends ConsumerWidget {
   final bool isTimeRunning;
@@ -125,7 +126,9 @@ class _AppBarHomeDataState extends ConsumerState<AppBarHomeData>
         child: FadeTransition(
           opacity: _fadeAnimation,
           child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 12),
+            margin: EdgeInsets.symmetric(
+              horizontal: isAndroidDevice ? 6.0 : 8.0,
+            ),
             decoration: BoxDecoration(
               color: appBarBgColor,
               borderRadius: BorderRadius.circular(15.0),
@@ -138,63 +141,70 @@ class _AppBarHomeDataState extends ConsumerState<AppBarHomeData>
                 ),
               ],
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 5.0,
-                vertical: 8.0,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.only(
+                left: isAndroidDevice ? 4.0 : 5.0,
+                top: isAndroidDevice ? 2.0 : 8.0,
+                bottom: isAndroidDevice ? 2.0 : 8.0,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      Theme.of(context).platform == TargetPlatform.iOS
-                          ? CupertinoIcons.settings_solid
-                          : Icons.settings_outlined,
-                      color: textColor,
-                      size: 25.0,
+                  SizedBox(
+                    width: isAndroidDevice ? 53 : 60,
+                    child: IconButton(
+                      icon: Icon(
+                        isAndroidDevice
+                            ? Icons.settings_outlined
+                            : CupertinoIcons.settings_solid,
+                        color: textColor,
+                        size: isAndroidDevice ? 24.0 : 25.0,
+                      ),
+                      onPressed: widget.onConfigTabPressed,
                     ),
-                    onPressed: widget.onConfigTabPressed,
                   ),
-                  GestureDetector(
-                    onTap: widget.onTitlePressed,
-                    child: TitleCategory(textColor: textColor),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: widget.onTitlePressed,
+                      child: TitleCategory(textColor: textColor),
+                    ),
                   ),
                   Row(
                     children: [
-                      widget.actualPageIndex != 0
-                          ? SizedBox(
-                              width: 40.0,
-                              child: IconButton(
-                                iconSize: 22.0,
-                                icon: AnimatedRotation(
-                                  turns: isRotated ? 5 / 6 : 0,
-                                  duration: const Duration(milliseconds: 200),
-                                  child:
-                                      Theme.of(context).platform ==
-                                          TargetPlatform.iOS
-                                      ? Icon(
-                                          color: CupertinoColors.white,
-                                          isRotated
-                                              ? CupertinoIcons
-                                                    .hourglass_bottomhalf_fill
-                                              : CupertinoIcons.hourglass,
-                                        )
-                                      : Icon(
-                                          color: textColor,
-                                          isRotated
-                                              ? Icons.hourglass_full_outlined
-                                              : Icons.hourglass_empty_outlined,
-                                        ),
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    isRotated = !isRotated;
-                                  });
-                                },
-                              ),
-                            )
-                          : const SizedBox(width: 40),
+                      Visibility(
+                        replacement: SizedBox(width: 40.0),
+                        visible: widget.actualPageIndex != 0,
+                        child: SizedBox(
+                          width: 35.0,
+                          child: IconButton(
+                            iconSize: 22.0,
+                            icon: AnimatedRotation(
+                              turns: isRotated ? 5 / 6 : 0,
+                              duration: const Duration(milliseconds: 200),
+                              child: isAndroidDevice
+                                  ? Icon(
+                                      color: textColor,
+                                      isRotated
+                                          ? Icons.hourglass_full_outlined
+                                          : Icons.hourglass_empty_outlined,
+                                    )
+                                  : Icon(
+                                      color: CupertinoColors.white,
+                                      isRotated
+                                          ? CupertinoIcons
+                                                .hourglass_bottomhalf_fill
+                                          : CupertinoIcons.hourglass,
+                                    ),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isRotated = !isRotated;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
                       Visibility(
                         visible: !widget.hideActions,
                         child: Container(
@@ -206,12 +216,20 @@ class _AppBarHomeDataState extends ConsumerState<AppBarHomeData>
                               Icons.category_outlined,
                               color: textColor,
                             ),
-                            onPressed: () => showCupertinoDialog(
-                              barrierDismissible: true,
-                              barrierColor: CupertinoColors.black.withAlpha(80),
-                              context: context,
-                              builder: (context) => ShowDialogCategories(),
-                            ),
+                            onPressed: () => isAndroidDevice
+                                ? showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        ShowDialogCategories(),
+                                  )
+                                : showCupertinoDialog(
+                                    barrierDismissible: true,
+                                    barrierColor: CupertinoColors.black
+                                        .withAlpha(80),
+                                    context: context,
+                                    builder: (context) =>
+                                        ShowDialogCategories(),
+                                  ),
                           ),
                         ),
                       ),

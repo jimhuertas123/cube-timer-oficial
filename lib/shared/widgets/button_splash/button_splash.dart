@@ -1,6 +1,5 @@
-import 'dart:io' show Platform;
-
 import 'package:cube_timer_oficial/features/timer/data/database.dart';
+import 'package:cube_timer_oficial/shared/platform_device/platform_device.dart';
 import 'package:cube_timer_oficial/shared/providers/providers.dart';
 import 'package:cube_timer_oficial/shared/widgets/button_splash/widgets/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,10 +42,10 @@ class CustomButtonSplash extends ConsumerWidget {
       return Center(child: Text('Error: $error'));
     }
 
-    if (Platform.isIOS) {
-      return IOSButtonSplashRow(cubeType: cubeType, id: id, onPress: onPress);
+    if (isIOSDevice) {
+      return IOSButtonSplash(cubeType: cubeType, id: id, onPress: onPress);
     } else {
-      return AndroidButtonSplashRow(
+      return AndroidButtonSplash(
         cubeType: cubeType,
         id: id,
         onPress: onPress,

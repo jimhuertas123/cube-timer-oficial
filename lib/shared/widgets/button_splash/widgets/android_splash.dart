@@ -3,14 +3,16 @@ import 'package:cube_timer_oficial/features/timer/data/database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../features/timer/presentation/helpers/helpers.dart';
+
 /// **ANDROID**: animation Android only splash on long press like original material design for twisty timer.
 /// splash oversize container size like original twisty timer app.
-class AndroidButtonSplashRow extends ConsumerStatefulWidget {
+class AndroidButtonSplash extends ConsumerStatefulWidget {
   final int id;
   final CubeType cubeType;
   final void Function(int id) onPress;
   final EdgeInsetsGeometry padding;
-  const AndroidButtonSplashRow({
+  const AndroidButtonSplash({
     super.key,
     required this.cubeType,
     required this.id,
@@ -20,10 +22,10 @@ class AndroidButtonSplashRow extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _AndroidButtonSplashRowState();
+      _AndroidButtonSplashState();
 }
 
-class _AndroidButtonSplashRowState extends ConsumerState<AndroidButtonSplashRow>
+class _AndroidButtonSplashState extends ConsumerState<AndroidButtonSplash>
     with SingleTickerProviderStateMixin {
   OverlayEntry? _overlayEntry;
   late AnimationController _animationController;
@@ -99,6 +101,8 @@ class _AndroidButtonSplashRowState extends ConsumerState<AndroidButtonSplashRow>
 
   @override
   Widget build(BuildContext context) {
+    final iconListIndex = widget.cubeType.id - 1;
+
     return Container(
       key: key,
       margin: widget.padding,
@@ -124,16 +128,20 @@ class _AndroidButtonSplashRowState extends ConsumerState<AndroidButtonSplashRow>
           width: (MediaQuery.of(context).size.width < 500)
               ? (MediaQuery.of(context).size.width) / 3.5
               : 133,
-          height: 50,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              iconList[widget.id],
-              SizedBox(height: 5),
+              iconList[iconListIndex],
+              SizedBox(height: 7),
               Text(
-                '${widget.cubeType.type} Cube',
-                style: const TextStyle(fontSize: 12),
+                '${labelCubeType(widget.cubeType.type)} Cube',
+                style: const TextStyle(
+                  fontFamily: 'Quicksand',
+                  fontSize: 12,
+                  letterSpacing: 0,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),

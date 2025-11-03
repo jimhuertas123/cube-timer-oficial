@@ -1,6 +1,7 @@
+import 'package:cube_timer_oficial/shared/platform_device/platform_device.dart';
 import 'package:flutter/material.dart';
 
-const iconSize = 35.0;
+final iconSize = isAndroidDevice ? 28.0 : 35.0;
 
 final iconList = <Image>[
   Image.asset(

@@ -10,7 +10,8 @@ class ShowDialogCategories extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedCategoryId = ref.watch(selectedCategoryProvider);
+    final cubeTypeId = ref.watch(selectedCubeTypeProvider).value?.id ?? 0;
+    final selectedCategoryId = ref.watch(selectedCategoryProvider(cubeTypeId));
 
     return selectedCategoryId.when(
       data: (category) =>

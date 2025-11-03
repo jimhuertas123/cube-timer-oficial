@@ -11,6 +11,8 @@ class CustomAlertDialog extends StatefulWidget {
   final Widget tittleContent;
   final double? height;
   final bool enableHeight;
+  final double paddingTopDialog;
+  final double borderRadius;
 
   const CustomAlertDialog({
     super.key,
@@ -24,6 +26,8 @@ class CustomAlertDialog extends StatefulWidget {
     this.insetPadding = EdgeInsets.zero,
     this.height,
     this.tittleContent = const SizedBox.shrink(),
+    this.paddingTopDialog = 10,
+    this.borderRadius = 20,
   });
 
   @override
@@ -34,10 +38,12 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+      buttonPadding: EdgeInsets.zero,
+      iconPadding: EdgeInsets.zero,
+      backgroundColor: Colors.white,
       insetPadding: widget.insetPadding,
       contentPadding: const EdgeInsets.only(top: 5.0, bottom: 0),
-      titlePadding: const EdgeInsets.only(top: 10),
+      titlePadding: EdgeInsets.only(top: widget.paddingTopDialog, bottom: 0),
       title: widget.tittle.isEmpty
           ? widget.tittleContent
           : Text(
@@ -47,10 +53,11 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                 fontWeight: FontWeight.w500,
                 fontSize: widget.fontTittleSize,
                 color: Colors.black,
+                fontFamily: 'Quicksand',
               ),
             ),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(widget.borderRadius)),
       ),
       actionsPadding: EdgeInsets.zero,
       actions: widget.actions,

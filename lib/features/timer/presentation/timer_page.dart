@@ -1,6 +1,6 @@
-import 'dart:io';
 import 'package:cube_timer_oficial/features/timer/data/database.dart';
 import 'package:cube_timer_oficial/features/timer/presentation/platform_page/platform_page.dart';
+import 'package:cube_timer_oficial/shared/platform_device/platform_device.dart';
 import 'package:cube_timer_oficial/shared/providers/providers.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -50,11 +50,11 @@ class HomeScreen extends ConsumerWidget {
     // All loaded
     final cubeType = selectedCubeTypeAsync.value;
 
-    if (Platform.isIOS) {
+    if (isIOSDevice) {
       return TimerIOSPage(
         selectedCubeType: cubeType ?? CubeType(id: 1, type: '3x3'),
       );
-    } else if (Platform.isAndroid) {
+    } else if (isAndroidDevice) {
       return TimerAndroidPage(
         selectedCubeType: cubeType ?? CubeType(id: 1, type: '3x3'),
       );

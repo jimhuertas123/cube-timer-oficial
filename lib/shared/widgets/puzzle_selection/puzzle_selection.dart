@@ -1,3 +1,4 @@
+import 'package:cube_timer_oficial/shared/platform_device/platform_device.dart';
 import 'package:cube_timer_oficial/shared/providers/providers.dart';
 import 'package:cube_timer_oficial/shared/widgets/button_splash/button_splash.dart';
 import 'package:flutter/material.dart';
@@ -12,13 +13,18 @@ class PuzzleSelection extends ConsumerWidget {
 
     return GridView.builder(
       key: const Key('puzzle_selection'),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         crossAxisSpacing: 0,
         mainAxisSpacing: 0,
-        childAspectRatio: 1.26,
+        childAspectRatio: isAndroidDevice ? 1.26 : 1.26,
       ),
-      padding: const EdgeInsets.only(top: 6, bottom: 6, left: 6, right: 10),
+      padding: EdgeInsets.only(
+        top: isAndroidDevice ? 12.5 : 6,
+        bottom: 6,
+        left: 4.6,
+        right: isAndroidDevice ? 4.6 : 10,
+      ),
       itemCount: cubeTypes.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
