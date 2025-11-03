@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +29,7 @@ class CustomCupertinoTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     double paddingBottom = MediaQuery.of(context).padding.bottom - 10;
     return Container(
-      padding: EdgeInsets.only(bottom: paddingBottom),
+      padding: EdgeInsets.only(bottom: max(0, paddingBottom)),
       height: height,
       decoration: BoxDecoration(
         color: backgroundColor,
