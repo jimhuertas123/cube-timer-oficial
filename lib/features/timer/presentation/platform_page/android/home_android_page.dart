@@ -74,7 +74,8 @@ class _TimerAndroidPageState extends ConsumerState<TimerAndroidPage> {
                     context: context,
                     builder: (context) => CustomAlertDialog(
                       enableHeight: true,
-                      height: 360,
+                      height: 220,
+                      // height: 360,
                       tittleContent: Container(
                         padding: const EdgeInsets.only(top: 5, bottom: 0),
                         child: Center(
