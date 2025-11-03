@@ -113,7 +113,6 @@ class AndroidCategorySelection extends ConsumerWidget {
                 );
               },
               onDeletePressed: () {
-                Navigator.of(context).pop();
                 showDialog(
                   context: context,
                   builder: (context) => Consumer(

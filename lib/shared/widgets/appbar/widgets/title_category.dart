@@ -11,9 +11,11 @@ class TitleCategory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-  final selectedCubeTypeAsync = ref.watch(selectedCubeTypeProvider);
-  final cubeTypeId = selectedCubeTypeAsync.value?.id ?? 0;
-  final selectedCategoryAsync = ref.watch(selectedCategoryProvider(cubeTypeId));
+    final selectedCubeTypeAsync = ref.watch(selectedCubeTypeProvider);
+    final cubeTypeId = selectedCubeTypeAsync.value?.id ?? 0;
+    final selectedCategoryAsync = ref.watch(
+      selectedCategoryProvider(cubeTypeId),
+    );
 
     final isLoading =
         selectedCategoryAsync.isLoading || selectedCubeTypeAsync.isLoading;
@@ -38,7 +40,7 @@ class TitleCategory extends ConsumerWidget {
         Container(
           padding: isAndroidDevice
               ? EdgeInsets.only(left: 58, top: 2)
-              : EdgeInsets.zero,
+              : EdgeInsets.only(left: 38),
           child: Column(
             children: <Widget>[
               selectedCubeTypeAsync.when(
