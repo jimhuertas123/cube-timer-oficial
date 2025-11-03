@@ -7,9 +7,11 @@ import '../../theme/theme.dart' as app_theme;
 class CupertinoThemeWithGradient {
   final CupertinoThemeData themeData;
   final List<Color> gradientColors;
+  final Color bottomAppbarColor;
   const CupertinoThemeWithGradient({
     required this.themeData,
     required this.gradientColors,
+    required this.bottomAppbarColor,
   });
 }
 
@@ -20,6 +22,7 @@ final cupertinoThemeProvider = Provider<CupertinoThemeWithGradient>((ref) {
     loading: () => const CupertinoThemeWithGradient(
       themeData: CupertinoThemeData(brightness: Brightness.light),
       gradientColors: [CupertinoColors.white, CupertinoColors.white],
+      bottomAppbarColor: CupertinoColors.lightBackgroundGray,
     ),
     error: (err, stack) {
       if (kDebugMode) {
@@ -28,6 +31,7 @@ final cupertinoThemeProvider = Provider<CupertinoThemeWithGradient>((ref) {
       return const CupertinoThemeWithGradient(
         themeData: CupertinoThemeData(brightness: Brightness.light),
         gradientColors: [CupertinoColors.white, CupertinoColors.white],
+        bottomAppbarColor: CupertinoColors.lightBackgroundGray,
       );
     },
     data: (s) {
@@ -38,22 +42,23 @@ final cupertinoThemeProvider = Provider<CupertinoThemeWithGradient>((ref) {
 
       final themeData = CupertinoThemeData(
         brightness: s.isDarkmode ? Brightness.dark : Brightness.light,
-        primaryColor: theme.patternColor.primaryColor,
+        primaryColor: theme.bgPatternColor.primaryColor,
         barBackgroundColor: theme.appBarColor,
-        scaffoldBackgroundColor: theme.patternColor.secondaryColor,
+        scaffoldBackgroundColor: theme.bgPatternColor.secondaryColor,
         textTheme: CupertinoTextThemeData(
           textStyle: TextStyle(color: textColor),
         ),
       );
 
       final gradientColors = [
-        theme.patternColor.primaryColor,
-        theme.patternColor.secondaryColor,
+        theme.bgPatternColor.primaryColor,
+        theme.bgPatternColor.secondaryColor,
       ];
 
       return CupertinoThemeWithGradient(
         themeData: themeData,
         gradientColors: gradientColors,
+        bottomAppbarColor: theme.bottomBarColor,
       );
     },
   );

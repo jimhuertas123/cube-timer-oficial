@@ -9,8 +9,13 @@ part 'database.g.dart'; // Generated file
 
 @DriftDatabase(tables: [CubeTypes, Categories, TimeRecords])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection()){
-    _insertDefaultCubeTypes();
+  AppDatabase._() : super(_openConnection());
+
+  static Future<AppDatabase> create() async {
+    final db = AppDatabase._();
+    await db._insertDefaultCubeTypes();
+    await db._insertDefaultNormalCategories();
+    return db;
   }
 
   @override
@@ -31,13 +36,29 @@ class AppDatabase extends _$AppDatabase {
       for (final type in defaultTypes) {
         await into(cubeTypes).insert(CubeTypesCompanion(type: Value(type)));
       }
+    }
+  }
 
-      final insertedCubeTypes = await select(cubeTypes).get();
-      for (final cubeType in insertedCubeTypes) {
+  ///insert a 'Normal' category for each cube type if not present
+  Future<void> _insertDefaultNormalCategories() async {
+    final insertedCubeTypes = await select(cubeTypes).get();
+    for (final cubeType in insertedCubeTypes) {
+      final existingNormal =
+          await (select(categories)..where(
+                (c) =>
+                    c.cubeTypeId.equals(cubeType.id) & c.name.equals('normal'),
+              ))
+              .getSingleOrNull();
+      if (existingNormal == null) {
         await into(categories).insert(
           CategoriesCompanion(
             name: Value('normal'),
             cubeTypeId: Value(cubeType.id),
+            shortestTime: const Value.absent(),
+            mean: const Value.absent(),
+            m_2: const Value.absent(),
+            deviation: const Value.absent(),
+            count: const Value.absent(),
           ),
         );
       }
@@ -46,26 +67,12 @@ class AppDatabase extends _$AppDatabase {
 
   //Categories CRUD
   Future<List<Category>> getAllCategories() => select(categories).get();
-  Future<void> addCategory(Category category) => into(categories).insert(
-    CategoriesCompanion(
-      name: Value(category.name),
-      cubeTypeId: Value(category.cubeTypeId),
-      shortestTime: Value(category.shortestTime),
-      mean: Value(category.mean),
-      m_2: Value(category.m_2),
-      deviation: Value(category.deviation),
-      count: Value(category.count),
-    ),
-  );
+  Future<void> addCategory(CategoriesCompanion category) =>
+      into(categories).insert(category);
   Future<void> deleteCategory(int id) =>
       (delete(categories)..where((c) => c.id.equals(id))).go();
-  Future<void> updateCategory(int id, {String? name, int? mean}) async {
-    await (update(categories)..where((c) => c.id.equals(id))).write(
-      CategoriesCompanion(
-        name: name != null ? Value(name) : const Value.absent(),
-        mean: mean != null ? Value(mean) : const Value.absent(),
-      ),
-    );
+  Future<void> updateCategory(int id, CategoriesCompanion companion) async {
+    await (update(categories)..where((c) => c.id.equals(id))).write(companion);
   }
 
   //TimeRecords CRUD
@@ -99,4 +106,3 @@ LazyDatabase _openConnection() {
     return NativeDatabase.createInBackground(file, logStatements: true);
   });
 }
-
