@@ -19,13 +19,14 @@ class MenuItem {
   final IconData icon;
   final List<MenuItem>? children;
 
-  const MenuItem(
-      {required this.id,
-      required this.title,
-      this.subtitle = "none",
-      this.link,
-      required this.icon,
-      this.children});
+  const MenuItem({
+    required this.id,
+    required this.title,
+    this.subtitle = "none",
+    this.link,
+    required this.icon,
+    this.children,
+  });
 }
 
 ///VARIABLES...
@@ -44,34 +45,64 @@ final Image iconPll = Image.asset(
   width: 20,
   height: 20,
 );
-final Image headerDrawer = Image.asset('assets/icons/menu_header.png',
-    fit: BoxFit.fitWidth, width: double.infinity);
+final Image headerDrawer = Image.asset(
+  'assets/icons/menu_header.png',
+  fit: BoxFit.fitWidth,
+  width: double.infinity,
+  alignment: AlignmentGeometry.bottomCenter,
+);
 
 ///SideMenuBar include every icon, title and link to the page
 const appMenuScreensItems = <MenuItem>[
-  MenuItem(id: 0, title: 'Cronómetro', link: "/", icon: Icons.timer_outlined
-      // children: **NO TIENE childrens**
-      ),
+  MenuItem(
+    id: 0,
+    title: 'Cronómetro',
+    link: "/",
+    icon: Icons.timer_outlined,
+    // children: **NO TIENE childrens**
+  ),
 
   MenuItem(
-      id: 1,
-      title: 'Entrenamiento',
-      // link: "/",**NO TIENE LINK**
-      icon: Icons.control_camera_outlined,
-      children: <MenuItem>[
-        MenuItem(id: 2, title: 'OLL', link: '/oll_training', icon: CubeIcon.oll_black),
-        MenuItem(id: 3, title: 'PLL', link: "/pll_training", icon: CubeIcon.pll_black),
-      ]),
+    id: 1,
+    title: 'Entrenamiento',
+    // link: "/",**NO TIENE LINK**
+    icon: Icons.control_camera_outlined,
+    children: <MenuItem>[
+      MenuItem(
+        id: 2,
+        title: 'OLL',
+        link: '/oll_training',
+        icon: CubeIcon.oll_black,
+      ),
+      MenuItem(
+        id: 3,
+        title: 'PLL',
+        link: "/pll_training",
+        icon: CubeIcon.pll_black,
+      ),
+    ],
+  ),
   //Algorithm options
   MenuItem(
-      id: 4,
-      title: 'Algoritmos',
-      // link: "/",**NO TIENE LINK**
-      icon: Icons.library_books_outlined,
-      children: <MenuItem>[
-        MenuItem(id: 5, title: 'OLL', link: "/oll_algorithms", icon: CubeIcon.oll_black),
-        MenuItem(id: 6, title: 'PLL', link: "/pll_algorithms", icon: CubeIcon.pll_black),
-      ]),
+    id: 4,
+    title: 'Algoritmos',
+    // link: "/",**NO TIENE LINK**
+    icon: Icons.library_books_outlined,
+    children: <MenuItem>[
+      MenuItem(
+        id: 5,
+        title: 'OLL',
+        link: "/oll_algorithms",
+        icon: CubeIcon.oll_black,
+      ),
+      MenuItem(
+        id: 6,
+        title: 'PLL',
+        link: "/pll_algorithms",
+        icon: CubeIcon.pll_black,
+      ),
+    ],
+  ),
 ];
 
 const appMenuOthers = <MenuItem>[
@@ -96,7 +127,7 @@ const appMenuOthers = <MenuItem>[
 ];
 
 const appMenufinalItems = <MenuItem>[
-    MenuItem(
+  MenuItem(
     id: 11,
     title: 'Ajustes',
     link: "/settings",

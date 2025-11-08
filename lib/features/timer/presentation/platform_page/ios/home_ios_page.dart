@@ -1,3 +1,4 @@
+import 'package:cube_timer_oficial/features/menu_content/menu_content.dart';
 import 'package:cube_timer_oficial/features/timer/data/database.dart';
 import 'package:cube_timer_oficial/shared/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -54,27 +55,34 @@ class _TimerIOSPageState extends ConsumerState<TimerIOSPage> {
             onConfigTabPressed: () => showCupertinoModalBottomSheet(
               context: context,
               builder: (context) => CupertinoPageScaffold(
+                backgroundColor: CupertinoColors.systemBackground,
                 navigationBar: CupertinoNavigationBar(
-                  middle: Text('First Modal'),
-                ),
-                child: Center(
-                  child: CupertinoButton(
-                    child: Text('Open Second Modal'),
-                    onPressed: () {
-                      showCupertinoModalBottomSheet(
-                        context: context,
-                        builder: (context) => CupertinoPageScaffold(
-                          navigationBar: CupertinoNavigationBar(
-                            middle: Text('Second Modal'),
-                          ),
-                          child: Center(
-                            child: Text('This is the second modal'),
-                          ),
-                        ),
-                      );
-                    },
+                  leading: CupertinoButton(
+                    onPressed: () {},
+                    child: const Text(''),
                   ),
+                  middle: Text('Cube Timer'),
                 ),
+                child: MenuBottomModal(pageContext: context),
+                // child: CupertinoButton(
+                //   child: Text('Open Second Modal'),
+                //   onPressed: () {
+                //     //close the modal
+                //     Navigator.of(context).pop();
+                //     // showCupertinoModalBottomSheet(
+                //     //   context: context,
+                //     //   builder: (context) => CupertinoPageScaffold(
+                //     //     navigationBar: CupertinoNavigationBar(
+                //     //       middle: Text('Second Modal'),
+                //     //     ),
+                //     //     child: Center(
+                //     //       child: Text('This is the second modal '),
+                //     //     ),
+                //     //   ),
+                //     // );
+                //   },
+                // ),
+                // )
               ),
             ),
             onTitlePressed: () => showCupertinoDialog(
@@ -147,9 +155,9 @@ class _TimerIOSPageState extends ConsumerState<TimerIOSPage> {
             inactiveColor: !isDarkmode ? Colors.black54 : Colors.white54,
             backgroundColor: cupertinoTheme.bottomAppbarColor,
             icons: const [
-              CupertinoIcons.home,
-              CupertinoIcons.time,
-              CupertinoIcons.settings,
+              CupertinoIcons.stopwatch,
+              CupertinoIcons.square_list,
+              CupertinoIcons.chart_bar,
             ],
           ),
         ),
