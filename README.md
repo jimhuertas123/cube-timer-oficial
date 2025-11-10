@@ -72,3 +72,51 @@ TextTheme(colorText: Color(0xFFFF1744), name: "Pessoa")
 ## Future Feature: Scramble Generation
 
 A future update will introduce scramble generation for each puzzle type. The scramble engine will use a server and `.jar` extracted from the official [Tnoodle-lib](https://github.com/thewca/tnoodle-lib).
+
+# Alpha 0.1.0 Release Summary
+
+This is the first alpha release of Cube Timer Oficial. The app is under active development and this version includes the following completed and tested features:
+
+## Platform Support
+
+- All features have been tested on iOS 16.0 and Android 15 (latest available simulators/emulators).
+
+## Timer Page
+
+- Fully functional timer page with:
+  - Category selection: Choose and manage categories for your solves.
+  - Cube type selection: Switch between different cube types (e.g., 3x3, 2x2, etc.).
+  - State management using Riverpod for reactive UI.
+  - Persistent storage using Drift (SQLite) and SharedPreferences for user selections and solve data.
+
+## Main Page Navigation
+
+- The main page allows switching between three subpages:
+  - **Cronometer:** Start and stop the timer for your solves.
+  - **Times:** View a list of your recorded solve times.
+  - **Statistics:** Visual graphs and statistics of your solve history.
+
+## Menu Navigation
+
+- Platform-adaptive navigation:
+  - **Android:** Uses a Drawer for side menu navigation.
+  - **iOS:** Uses a BottomSheetModal for menu navigation.
+- Both menus support switching between all main pages and options.
+- Most menu options are currently placeholders except for the theme section, which is fully functional.
+
+## Theme System
+
+- Custom theme provider for both Material (Android) and Cupertino (iOS) styles.
+- Unique app color themes using gradients of two colors for a modern look.
+- Theme system includes:
+  - App bar and bottom navigation bar color adaptation.
+  - Theme switcher dialog that works seamlessly on both platforms.
+
+## Additional Notes
+
+- The app is still incomplete; some features and menu options are placeholders and will be implemented in future releases.
+- All completed features have been tested for stability and cross-platform compatibility.
+
+---
+
+This alpha release is intended for early feedback and testing. Please report any issues or suggestions to help improve the app!
