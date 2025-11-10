@@ -73,6 +73,9 @@ TextTheme(colorText: Color(0xFFFF1744), name: "Pessoa")
 
 A future update will introduce scramble generation for each puzzle type. The scramble engine will use a server and `.jar` extracted from the official [Tnoodle-lib](https://github.com/thewca/tnoodle-lib).
 
+
+---
+
 # Alpha 0.1.0 Release Summary
 
 This is the first alpha release of Cube Timer Oficial. The app is under active development and this version includes the following completed and tested features:
@@ -116,6 +119,19 @@ This is the first alpha release of Cube Timer Oficial. The app is under active d
 
 - The app is still incomplete; some features and menu options are placeholders and will be implemented in future releases.
 - All completed features have been tested for stability and cross-platform compatibility.
+
+## Testing in devices
+
+### IOS
+
+
+https://github.com/user-attachments/assets/51dcdddf-1e2c-4812-b60c-e9c763d3b9a7
+
+
+### Android
+
+https://github.com/user-attachments/assets/86b10285-cf03-4e18-be06-6ecb476a7e4b
+
 
 ---
 
