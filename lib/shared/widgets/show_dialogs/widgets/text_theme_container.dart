@@ -1,3 +1,4 @@
+import 'package:cube_timer_oficial/shared/platform_device/platform_device.dart';
 import 'package:flutter/material.dart';
 
 class TextThemeContainer extends StatelessWidget {
@@ -25,13 +26,13 @@ class TextThemeContainer extends StatelessWidget {
         GestureDetector(
           onTap: onTap,
           child: Container(
-            margin: const EdgeInsets.only(left: 6, right: 12, top: 10),
-            width: 55,
-            height: 47,
+            margin: const EdgeInsets.only(left: 6, right: 7, top: 7),
+            width: 50,
+            height: 44,
             child: DecoratedBox(
               decoration: BoxDecoration(
                 border: Border.all(color: borderColor, width: 0.7),
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(9.0),
                 color: Colors.transparent,
               ),
               child: Center(
@@ -39,7 +40,8 @@ class TextThemeContainer extends StatelessWidget {
                   'Aa',
                   style: TextStyle(
                     color: color,
-                    fontSize: 25.0,
+                    fontSize: isAndroidDevice ? 22 : 25.0,
+                    fontFamily: 'Quicksand',
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -47,12 +49,12 @@ class TextThemeContainer extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 6.0),
+        const SizedBox(height: 5),
         FittedBox(
           fit: BoxFit.fitHeight,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 6),
-            margin: const EdgeInsets.only(bottom: 5),
+            margin: const EdgeInsets.only(bottom: 8),
             alignment: Alignment.center,
             decoration: (isSelected)
                 ? BoxDecoration(

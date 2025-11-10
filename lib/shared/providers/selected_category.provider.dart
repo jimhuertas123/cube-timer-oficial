@@ -17,7 +17,7 @@ class SelectedCategoryNotifier extends AsyncNotifier<Category?> {
     final prefs = await SharedPreferences.getInstance();
     // You must set _cubeTypeId before calling build
     if (_cubeTypeId == null) throw StateError('CubeTypeId not set');
-    final key = 'selected_category_id_${_cubeTypeId}';
+    final key = 'selected_category_id_$_cubeTypeId';
     final lastCategoryId = prefs.getInt(key);
     final categories = await ref.watch(categoryListProviderHelper.future);
     Category selected = categories.firstWhere(

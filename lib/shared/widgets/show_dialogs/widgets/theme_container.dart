@@ -1,3 +1,4 @@
+import 'package:cube_timer_oficial/shared/platform_device/platform_device.dart';
 import 'package:cube_timer_oficial/shared/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -19,34 +20,29 @@ class ThemeContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-    mainAxisSize: MainAxisSize.min, // Alinea el contenido al centro
+    mainAxisSize: MainAxisSize.min,
     children: [
       GestureDetector(
         onTap: onTap,
         child: Container(
-          width: 40.0, // Ancho del rectángulo
-          height: 63.0, // Alto del rectángulo
+          margin: const EdgeInsets.only(left: 0, right: 0),
+          width: 40.0,
+          height: 60.0,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                colors.primaryColor,
-                colors.secondaryColor,
-              ], // Colores del gradiente
-              begin: Alignment.topCenter, // Inicio del gradiente desde arriba
-              end: Alignment.bottomCenter, // Fin del gradiente hacia abajo
+              colors: [colors.primaryColor, colors.secondaryColor],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
             borderRadius: BorderRadius.circular(8.0),
-            border: Border.all(
-              color: Colors.black, // Color del borde (en este caso, negro)
-              width: 0.5, // Ancho del borde
-            ),
+            border: Border.all(color: Colors.black, width: 0.5),
           ),
         ),
       ),
-      const SizedBox(height: 5.0), // Espacio entre el rectángulo y el texto
+      const SizedBox(height: 7.0),
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        width: 62,
+        width: 60,
         decoration: BoxDecoration(
           color: backgroundTextColor,
           borderRadius: BorderRadius.circular(8.0),
@@ -62,9 +58,11 @@ class ThemeContainer extends StatelessWidget {
                   ),
                 )
               : null,
-          padding: const EdgeInsets.only(top: 4),
+          padding: isIOSDevice
+              ? const EdgeInsets.only(top: 2)
+              : EdgeInsets.zero,
           width: 8.0,
-          height: 38,
+          height: 35,
           child: Text(
             tittle,
             textAlign: TextAlign.center,
@@ -72,6 +70,8 @@ class ThemeContainer extends StatelessWidget {
               fontFamily: "Quicksand",
               color: Colors.black,
               fontSize: 11.0,
+              wordSpacing: 0,
+              height: 1.3,
             ),
           ),
         ),

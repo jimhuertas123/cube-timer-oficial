@@ -54,16 +54,9 @@ class _TimerIOSPageState extends ConsumerState<TimerIOSPage> {
             isTimeRunning: isTimeRunning,
             onConfigTabPressed: () => showCupertinoModalBottomSheet(
               context: context,
-              builder: (context) => CupertinoPageScaffold(
-                backgroundColor: CupertinoColors.systemBackground,
-                navigationBar: CupertinoNavigationBar(
-                  leading: CupertinoButton(
-                    onPressed: () {},
-                    child: const Text(''),
-                  ),
-                  middle: Text('Cube Timer'),
-                ),
-                child: MenuBottomModal(pageContext: context),
+              builder: (context) => MenuBottomModal(
+                title: 'Settings',
+                pageContext: context,
                 // child: CupertinoButton(
                 //   child: Text('Open Second Modal'),
                 //   onPressed: () {
