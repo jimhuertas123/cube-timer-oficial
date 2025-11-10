@@ -1,6 +1,6 @@
 import 'package:cube_timer_oficial/features/timer/data/database.dart';
 import 'package:cube_timer_oficial/shared/providers/providers.dart';
-import 'package:cube_timer_oficial/shared/widgets/custom_show_dialog/custom_show_dialog.dart';
+import 'package:cube_timer_oficial/shared/widgets/show_dialogs/android/custom_show_dialog.dart';
 import 'package:drift/drift.dart' hide Column;
 import 'package:flutter/cupertino.dart' hide Column;
 import 'package:flutter/material.dart';
