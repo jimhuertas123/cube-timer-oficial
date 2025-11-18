@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'platform_page/platform_page.dart';
+import 'presentation/platform_page/platform_page.dart';
 
 class PllAlgorithmsPage extends ConsumerWidget {
   const PllAlgorithmsPage({super.key});

@@ -1,0 +1,1 @@
+enum TrainerType { oll, pll }

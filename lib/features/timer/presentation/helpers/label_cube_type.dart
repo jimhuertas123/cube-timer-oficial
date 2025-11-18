@@ -1,9 +1,9 @@
 String labelCubeType(String? cubeType) {
   switch (cubeType) {
-    case 'threeByThree':
-      return '3x3';
     case 'twoByTwo':
       return '2x2';
+    case 'threeByThree':
+      return '3x3';
     case 'fourByFour':
       return '4x4';
     case 'fiveByFive':

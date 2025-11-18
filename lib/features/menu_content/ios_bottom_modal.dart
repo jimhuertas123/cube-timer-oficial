@@ -30,7 +30,7 @@ class MenuBottomModal extends ConsumerWidget {
         middle: Text(title, style: TextStyle(fontSize: 20)),
       ),
       child: ListView(
-        // adjust for nav bar height
+        physics: const ClampingScrollPhysics(),
         children: <Widget>[
           PreferredSize(
             preferredSize: const Size.fromHeight(220),

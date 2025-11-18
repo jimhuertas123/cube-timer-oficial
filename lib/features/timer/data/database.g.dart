@@ -795,6 +795,32 @@ class $TimeRecordsTable extends TimeRecords
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
   );
+  static const VerificationMeta _isOllMeta = const VerificationMeta('isOll');
+  @override
+  late final GeneratedColumn<bool> isOll = GeneratedColumn<bool>(
+    'is_oll',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_oll" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _isPllMeta = const VerificationMeta('isPll');
+  @override
+  late final GeneratedColumn<bool> isPll = GeneratedColumn<bool>(
+    'is_pll',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_pll" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -804,6 +830,8 @@ class $TimeRecordsTable extends TimeRecords
     date,
     comment,
     penalty,
+    isOll,
+    isPll,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -867,6 +895,18 @@ class $TimeRecordsTable extends TimeRecords
         penalty.isAcceptableOrUnknown(data['penalty']!, _penaltyMeta),
       );
     }
+    if (data.containsKey('is_oll')) {
+      context.handle(
+        _isOllMeta,
+        isOll.isAcceptableOrUnknown(data['is_oll']!, _isOllMeta),
+      );
+    }
+    if (data.containsKey('is_pll')) {
+      context.handle(
+        _isPllMeta,
+        isPll.isAcceptableOrUnknown(data['is_pll']!, _isPllMeta),
+      );
+    }
     return context;
   }
 
@@ -904,6 +944,14 @@ class $TimeRecordsTable extends TimeRecords
         DriftSqlType.int,
         data['${effectivePrefix}penalty'],
       )!,
+      isOll: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_oll'],
+      )!,
+      isPll: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_pll'],
+      )!,
     );
   }
 
@@ -921,6 +969,8 @@ class TimeRecord extends DataClass implements Insertable<TimeRecord> {
   final String date;
   final String? comment;
   final int penalty;
+  final bool isOll;
+  final bool isPll;
   const TimeRecord({
     required this.id,
     required this.categoryId,
@@ -929,6 +979,8 @@ class TimeRecord extends DataClass implements Insertable<TimeRecord> {
     required this.date,
     this.comment,
     required this.penalty,
+    required this.isOll,
+    required this.isPll,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -942,6 +994,8 @@ class TimeRecord extends DataClass implements Insertable<TimeRecord> {
       map['comment'] = Variable<String>(comment);
     }
     map['penalty'] = Variable<int>(penalty);
+    map['is_oll'] = Variable<bool>(isOll);
+    map['is_pll'] = Variable<bool>(isPll);
     return map;
   }
 
@@ -956,6 +1010,8 @@ class TimeRecord extends DataClass implements Insertable<TimeRecord> {
           ? const Value.absent()
           : Value(comment),
       penalty: Value(penalty),
+      isOll: Value(isOll),
+      isPll: Value(isPll),
     );
   }
 
@@ -972,6 +1028,8 @@ class TimeRecord extends DataClass implements Insertable<TimeRecord> {
       date: serializer.fromJson<String>(json['date']),
       comment: serializer.fromJson<String?>(json['comment']),
       penalty: serializer.fromJson<int>(json['penalty']),
+      isOll: serializer.fromJson<bool>(json['isOll']),
+      isPll: serializer.fromJson<bool>(json['isPll']),
     );
   }
   @override
@@ -985,6 +1043,8 @@ class TimeRecord extends DataClass implements Insertable<TimeRecord> {
       'date': serializer.toJson<String>(date),
       'comment': serializer.toJson<String?>(comment),
       'penalty': serializer.toJson<int>(penalty),
+      'isOll': serializer.toJson<bool>(isOll),
+      'isPll': serializer.toJson<bool>(isPll),
     };
   }
 
@@ -996,6 +1056,8 @@ class TimeRecord extends DataClass implements Insertable<TimeRecord> {
     String? date,
     Value<String?> comment = const Value.absent(),
     int? penalty,
+    bool? isOll,
+    bool? isPll,
   }) => TimeRecord(
     id: id ?? this.id,
     categoryId: categoryId ?? this.categoryId,
@@ -1004,6 +1066,8 @@ class TimeRecord extends DataClass implements Insertable<TimeRecord> {
     date: date ?? this.date,
     comment: comment.present ? comment.value : this.comment,
     penalty: penalty ?? this.penalty,
+    isOll: isOll ?? this.isOll,
+    isPll: isPll ?? this.isPll,
   );
   TimeRecord copyWithCompanion(TimeRecordsCompanion data) {
     return TimeRecord(
@@ -1018,6 +1082,8 @@ class TimeRecord extends DataClass implements Insertable<TimeRecord> {
       date: data.date.present ? data.date.value : this.date,
       comment: data.comment.present ? data.comment.value : this.comment,
       penalty: data.penalty.present ? data.penalty.value : this.penalty,
+      isOll: data.isOll.present ? data.isOll.value : this.isOll,
+      isPll: data.isPll.present ? data.isPll.value : this.isPll,
     );
   }
 
@@ -1030,7 +1096,9 @@ class TimeRecord extends DataClass implements Insertable<TimeRecord> {
           ..write('scramble: $scramble, ')
           ..write('date: $date, ')
           ..write('comment: $comment, ')
-          ..write('penalty: $penalty')
+          ..write('penalty: $penalty, ')
+          ..write('isOll: $isOll, ')
+          ..write('isPll: $isPll')
           ..write(')'))
         .toString();
   }
@@ -1044,6 +1112,8 @@ class TimeRecord extends DataClass implements Insertable<TimeRecord> {
     date,
     comment,
     penalty,
+    isOll,
+    isPll,
   );
   @override
   bool operator ==(Object other) =>
@@ -1055,7 +1125,9 @@ class TimeRecord extends DataClass implements Insertable<TimeRecord> {
           other.scramble == this.scramble &&
           other.date == this.date &&
           other.comment == this.comment &&
-          other.penalty == this.penalty);
+          other.penalty == this.penalty &&
+          other.isOll == this.isOll &&
+          other.isPll == this.isPll);
 }
 
 class TimeRecordsCompanion extends UpdateCompanion<TimeRecord> {
@@ -1066,6 +1138,8 @@ class TimeRecordsCompanion extends UpdateCompanion<TimeRecord> {
   final Value<String> date;
   final Value<String?> comment;
   final Value<int> penalty;
+  final Value<bool> isOll;
+  final Value<bool> isPll;
   const TimeRecordsCompanion({
     this.id = const Value.absent(),
     this.categoryId = const Value.absent(),
@@ -1074,6 +1148,8 @@ class TimeRecordsCompanion extends UpdateCompanion<TimeRecord> {
     this.date = const Value.absent(),
     this.comment = const Value.absent(),
     this.penalty = const Value.absent(),
+    this.isOll = const Value.absent(),
+    this.isPll = const Value.absent(),
   });
   TimeRecordsCompanion.insert({
     this.id = const Value.absent(),
@@ -1083,6 +1159,8 @@ class TimeRecordsCompanion extends UpdateCompanion<TimeRecord> {
     required String date,
     this.comment = const Value.absent(),
     this.penalty = const Value.absent(),
+    this.isOll = const Value.absent(),
+    this.isPll = const Value.absent(),
   }) : categoryId = Value(categoryId),
        milliseconds = Value(milliseconds),
        scramble = Value(scramble),
@@ -1095,6 +1173,8 @@ class TimeRecordsCompanion extends UpdateCompanion<TimeRecord> {
     Expression<String>? date,
     Expression<String>? comment,
     Expression<int>? penalty,
+    Expression<bool>? isOll,
+    Expression<bool>? isPll,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1104,6 +1184,8 @@ class TimeRecordsCompanion extends UpdateCompanion<TimeRecord> {
       if (date != null) 'date': date,
       if (comment != null) 'comment': comment,
       if (penalty != null) 'penalty': penalty,
+      if (isOll != null) 'is_oll': isOll,
+      if (isPll != null) 'is_pll': isPll,
     });
   }
 
@@ -1115,6 +1197,8 @@ class TimeRecordsCompanion extends UpdateCompanion<TimeRecord> {
     Value<String>? date,
     Value<String?>? comment,
     Value<int>? penalty,
+    Value<bool>? isOll,
+    Value<bool>? isPll,
   }) {
     return TimeRecordsCompanion(
       id: id ?? this.id,
@@ -1124,6 +1208,8 @@ class TimeRecordsCompanion extends UpdateCompanion<TimeRecord> {
       date: date ?? this.date,
       comment: comment ?? this.comment,
       penalty: penalty ?? this.penalty,
+      isOll: isOll ?? this.isOll,
+      isPll: isPll ?? this.isPll,
     );
   }
 
@@ -1151,6 +1237,12 @@ class TimeRecordsCompanion extends UpdateCompanion<TimeRecord> {
     if (penalty.present) {
       map['penalty'] = Variable<int>(penalty.value);
     }
+    if (isOll.present) {
+      map['is_oll'] = Variable<bool>(isOll.value);
+    }
+    if (isPll.present) {
+      map['is_pll'] = Variable<bool>(isPll.value);
+    }
     return map;
   }
 
@@ -1163,7 +1255,9 @@ class TimeRecordsCompanion extends UpdateCompanion<TimeRecord> {
           ..write('scramble: $scramble, ')
           ..write('date: $date, ')
           ..write('comment: $comment, ')
-          ..write('penalty: $penalty')
+          ..write('penalty: $penalty, ')
+          ..write('isOll: $isOll, ')
+          ..write('isPll: $isPll')
           ..write(')'))
         .toString();
   }
@@ -1791,6 +1885,8 @@ typedef $$TimeRecordsTableCreateCompanionBuilder =
       required String date,
       Value<String?> comment,
       Value<int> penalty,
+      Value<bool> isOll,
+      Value<bool> isPll,
     });
 typedef $$TimeRecordsTableUpdateCompanionBuilder =
     TimeRecordsCompanion Function({
@@ -1801,6 +1897,8 @@ typedef $$TimeRecordsTableUpdateCompanionBuilder =
       Value<String> date,
       Value<String?> comment,
       Value<int> penalty,
+      Value<bool> isOll,
+      Value<bool> isPll,
     });
 
 class $$TimeRecordsTableFilterComposer
@@ -1844,6 +1942,16 @@ class $$TimeRecordsTableFilterComposer
 
   ColumnFilters<int> get penalty => $composableBuilder(
     column: $table.penalty,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isOll => $composableBuilder(
+    column: $table.isOll,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isPll => $composableBuilder(
+    column: $table.isPll,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -1891,6 +1999,16 @@ class $$TimeRecordsTableOrderingComposer
     column: $table.penalty,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<bool> get isOll => $composableBuilder(
+    column: $table.isOll,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isPll => $composableBuilder(
+    column: $table.isPll,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$TimeRecordsTableAnnotationComposer
@@ -1926,6 +2044,12 @@ class $$TimeRecordsTableAnnotationComposer
 
   GeneratedColumn<int> get penalty =>
       $composableBuilder(column: $table.penalty, builder: (column) => column);
+
+  GeneratedColumn<bool> get isOll =>
+      $composableBuilder(column: $table.isOll, builder: (column) => column);
+
+  GeneratedColumn<bool> get isPll =>
+      $composableBuilder(column: $table.isPll, builder: (column) => column);
 }
 
 class $$TimeRecordsTableTableManager
@@ -1966,6 +2090,8 @@ class $$TimeRecordsTableTableManager
                 Value<String> date = const Value.absent(),
                 Value<String?> comment = const Value.absent(),
                 Value<int> penalty = const Value.absent(),
+                Value<bool> isOll = const Value.absent(),
+                Value<bool> isPll = const Value.absent(),
               }) => TimeRecordsCompanion(
                 id: id,
                 categoryId: categoryId,
@@ -1974,6 +2100,8 @@ class $$TimeRecordsTableTableManager
                 date: date,
                 comment: comment,
                 penalty: penalty,
+                isOll: isOll,
+                isPll: isPll,
               ),
           createCompanionCallback:
               ({
@@ -1984,6 +2112,8 @@ class $$TimeRecordsTableTableManager
                 required String date,
                 Value<String?> comment = const Value.absent(),
                 Value<int> penalty = const Value.absent(),
+                Value<bool> isOll = const Value.absent(),
+                Value<bool> isPll = const Value.absent(),
               }) => TimeRecordsCompanion.insert(
                 id: id,
                 categoryId: categoryId,
@@ -1992,6 +2122,8 @@ class $$TimeRecordsTableTableManager
                 date: date,
                 comment: comment,
                 penalty: penalty,
+                isOll: isOll,
+                isPll: isPll,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

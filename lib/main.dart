@@ -1,8 +1,11 @@
+import 'package:cube_timer_oficial/core/core.dart';
 import 'package:cube_timer_oficial/features/about/about_page.dart';
-import 'package:cube_timer_oficial/features/oll/presentation/oll_algorithms_page.dart';
-import 'package:cube_timer_oficial/features/pll/presentation/pll_algorithms_page.dart';
+import 'package:cube_timer_oficial/features/oll/oll_algorithms_page.dart';
+import 'package:cube_timer_oficial/features/pll/pll_algorithms_page.dart';
 import 'package:cube_timer_oficial/features/settings/settings_page.dart';
 import 'package:cube_timer_oficial/features/timer/presentation/timer_page.dart';
+import 'package:cube_timer_oficial/features/trainer/trainer_page.dart';
+import 'package:cube_timer_oficial/shared/platform_device/platform_device.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,9 +24,8 @@ class MainApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final materialTheme = ref.watch(materialThemeProvider);
     final cupertinoTheme = ref.watch(cupertinoThemeProvider).themeData;
-    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
 
-    if (isIOS) {
+    if (isIOSDevice) {
       return CupertinoApp(
         theme: cupertinoTheme,
         onGenerateRoute: (settings) {
@@ -41,6 +43,16 @@ class MainApp extends ConsumerWidget {
             case '/pll_algorithms':
               return MaterialWithModalsPageRoute(
                 builder: (context) => PllAlgorithmsPage(),
+                settings: settings,
+              );
+            case '/oll_timer':
+              return MaterialWithModalsPageRoute(
+                builder: (context) => TrainerPage(type: TrainerType.oll),
+                settings: settings,
+              );
+            case '/pll_timer':
+              return MaterialWithModalsPageRoute(
+                builder: (context) => TrainerPage(type: TrainerType.pll),
                 settings: settings,
               );
             case '/about':
@@ -69,6 +81,8 @@ class MainApp extends ConsumerWidget {
         routes: {
           '/oll_algorithms': (context) => OllAlgorithmsPage(),
           '/pll_algorithms': (context) => PllAlgorithmsPage(),
+          '/oll_timer': (context) => TrainerPage(type: TrainerType.oll),
+          '/pll_timer': (context) => TrainerPage(type: TrainerType.pll),
           '/about': (context) => AboutPage(),
           '/settings': (context) => SettingsPage(),
         },

@@ -16,4 +16,6 @@ class TimeRecords extends Table {
   TextColumn get comment => text().nullable()();
   IntColumn get penalty =>
       integer().withDefault(const Constant(0))(); //store Penalty as int index
+  BoolColumn get isOll => boolean().withDefault(const Constant(false))();
+  BoolColumn get isPll => boolean().withDefault(const Constant(false))();
 }
