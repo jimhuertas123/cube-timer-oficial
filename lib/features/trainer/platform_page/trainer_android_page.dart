@@ -1,7 +1,7 @@
 import 'package:cube_timer_oficial/core/constants/constants.dart';
 import 'package:cube_timer_oficial/features/menu_content/android_drawer.dart';
 import 'package:cube_timer_oficial/features/timer/data/database.dart';
-import 'package:cube_timer_oficial/features/timer/presentation/widgets/nav_bar/nav_bar.dart';
+import 'package:cube_timer_oficial/shared/widgets/bottom_nav_bar/android_bottom_nav_bar.dart';
 import 'package:cube_timer_oficial/shared/theme/app_theme.dart';
 import 'package:cube_timer_oficial/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -128,7 +128,7 @@ class _TrainerAndroidPageState extends ConsumerState<TrainerAndroidPage> {
           ],
         ),
         bottomNavigationBar: indexPage == 0 || indexPage == 1 || indexPage == 2
-            ? NavBar(
+            ? BottomNavBarAndroid(
                 actualIndexPage: indexPage,
                 activeIconColor: textColor,
                 backgroundColor: navbarBackgroundColor,

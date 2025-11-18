@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class NavBar extends ConsumerStatefulWidget {
+class BottomNavBarAndroid extends StatefulWidget {
   final Color backgroundColor;
   final Color activeIconColor;
   final Color inactiveIconColor;
@@ -10,7 +8,7 @@ class NavBar extends ConsumerStatefulWidget {
   final int actualIndexPage;
   final PageController pageController;
   final void Function(int) onTap;
-  const NavBar({
+  const BottomNavBarAndroid({
     super.key,
     required this.backgroundColor,
     required this.activeIconColor,
@@ -22,10 +20,10 @@ class NavBar extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _NavBarState();
+  State<BottomNavBarAndroid> createState() => _BottomNavBarAndroidState();
 }
 
-class _NavBarState extends ConsumerState<NavBar>
+class _BottomNavBarAndroidState extends State<BottomNavBarAndroid>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<Offset> _slideAnimation;
@@ -65,111 +63,17 @@ class _NavBarState extends ConsumerState<NavBar>
       _animationController.reverse();
     }
 
-    return Theme.of(context).platform == TargetPlatform.iOS
-        ? SlideTransition(
-            position: _slideAnimation,
-            child: FadeTransition(
-              opacity: _fadeAnimation,
-              child: IosTabBar(
-                backgroundColor: widget.backgroundColor,
-                activeIconColor: widget.activeIconColor,
-                inactiveIconColor: widget.inactiveIconColor,
-                actualIndexPage: widget.actualIndexPage,
-                pageController: widget.pageController,
-                onTap: widget.onTap,
-              ),
-            ),
-          )
-        : SlideTransition(
-            position: _slideAnimation,
-            child: FadeTransition(
-              opacity: _fadeAnimation,
-              child: AndroidBottomNavBar(
-                backgroundColor: widget.backgroundColor,
-                activeIconColor: widget.activeIconColor,
-                inactiveIconColor: widget.inactiveIconColor,
-                pageController: widget.pageController,
-                actualIndexPage: widget.actualIndexPage,
-                onTap: widget.onTap,
-              ),
-            ),
-          );
-  }
-}
-
-///IOS bottom navigation bar
-class IosTabBar extends StatefulWidget {
-  final Color backgroundColor;
-  final Color activeIconColor;
-  final Color inactiveIconColor;
-  final int actualIndexPage;
-  final PageController pageController;
-  final void Function(int) onTap;
-  const IosTabBar({
-    super.key,
-    required this.backgroundColor,
-    required this.activeIconColor,
-    required this.inactiveIconColor,
-    required this.actualIndexPage,
-    required this.pageController,
-    required this.onTap,
-  });
-
-  @override
-  State<IosTabBar> createState() => _IosTabBarState();
-}
-
-class _IosTabBarState extends State<IosTabBar> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withAlpha(70),
-            spreadRadius: 0.1,
-            blurRadius: 4.7,
-            offset: const Offset(0, 0),
-          ),
-        ],
-      ),
-      height: 38,
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
-        ),
-        child: CupertinoTabBar(
-          currentIndex: widget.actualIndexPage,
+    return SlideTransition(
+      position: _slideAnimation,
+      child: FadeTransition(
+        opacity: _fadeAnimation,
+        child: AndroidBottomNavBar(
           backgroundColor: widget.backgroundColor,
+          activeIconColor: widget.activeIconColor,
+          inactiveIconColor: widget.inactiveIconColor,
+          pageController: widget.pageController,
+          actualIndexPage: widget.actualIndexPage,
           onTap: widget.onTap,
-          iconSize: 24,
-          activeColor: widget.activeIconColor,
-          inactiveColor: widget.inactiveIconColor,
-          items: [
-            BottomNavigationBarItem(
-              icon: Container(
-                margin: const EdgeInsets.only(top: 5),
-                child: const Icon(CupertinoIcons.timer),
-              ),
-            ),
-            BottomNavigationBarItem(
-              icon: Container(
-                margin: const EdgeInsets.only(top: 5),
-                child: const Icon(CupertinoIcons.square_list),
-              ),
-            ),
-            BottomNavigationBarItem(
-              icon: Container(
-                margin: const EdgeInsets.only(top: 5),
-                child: const Icon(CupertinoIcons.graph_square),
-              ),
-            ),
-          ],
         ),
       ),
     );

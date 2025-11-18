@@ -5,8 +5,7 @@ import 'package:cube_timer_oficial/shared/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cube_timer_oficial/features/timer/presentation/subpages/subpages.dart';
-import 'package:cube_timer_oficial/features/timer/presentation/widgets/nav_bar/custom_cupertino_tabbar.dart';
-import 'package:cube_timer_oficial/features/timer/presentation/widgets/widgets.dart';
+import 'package:cube_timer_oficial/shared/widgets/bottom_nav_bar/ios_bottom_nav_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cube_timer_oficial/shared/providers/theme_providers/cupertino_theme.provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -58,29 +57,8 @@ class _TrainerIOSPageState extends ConsumerState<TrainerIOSPage> {
             isTimeRunning: isTimeRunning,
             onConfigTabPressed: () => showCupertinoModalBottomSheet(
               context: context,
-              builder: (context) => MenuBottomModal(
-                title: 'Settings',
-                pageContext: context,
-                // child: CupertinoButton(
-                //   child: Text('Open Second Modal'),
-                //   onPressed: () {
-                //     //close the modal
-                //     Navigator.of(context).pop();
-                //     // showCupertinoModalBottomSheet(
-                //     //   context: context,
-                //     //   builder: (context) => CupertinoPageScaffold(
-                //     //     navigationBar: CupertinoNavigationBar(
-                //     //       middle: Text('Second Modal'),
-                //     //     ),
-                //     //     child: Center(
-                //     //       child: Text('This is the second modal '),
-                //     //     ),
-                //     //   ),
-                //     // );
-                //   },
-                // ),
-                // )
-              ),
+              builder: (context) =>
+                  MenuBottomModal(title: 'Settings', pageContext: context),
             ),
             onTitlePressed: () => showCupertinoDialog(
               barrierDismissible: true,
@@ -130,7 +108,7 @@ class _TrainerIOSPageState extends ConsumerState<TrainerIOSPage> {
             padding: const EdgeInsets.only(top: 70.0, bottom: 40.0),
             child: Column(
               children: <Widget>[
-                if (_selectedIndex == 0) CronometerSubpage(),
+                if (_selectedIndex == 0) CronometerSubpage(height: 300),
                 if (_selectedIndex == 1) TimesSubpage(),
                 if (_selectedIndex == 2) StatisticsSubpage(),
               ],
@@ -141,7 +119,8 @@ class _TrainerIOSPageState extends ConsumerState<TrainerIOSPage> {
           left: 0,
           right: 0,
           bottom: 0,
-          child: CustomCupertinoTabBar(
+          child: BottomNavBarIos(
+            isTimerRunning: isTimeRunning,
             currentIndex: _selectedIndex,
             onTap: (index) {
               setState(() {

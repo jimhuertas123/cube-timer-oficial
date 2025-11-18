@@ -1,13 +1,13 @@
 import 'package:cube_timer_oficial/features/menu_content/menu_content.dart';
 import 'package:cube_timer_oficial/features/timer/data/database.dart';
+import 'package:cube_timer_oficial/shared/providers/providers.dart';
 import 'package:cube_timer_oficial/shared/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cube_timer_oficial/features/timer/presentation/subpages/subpages.dart';
-import 'package:cube_timer_oficial/features/timer/presentation/widgets/nav_bar/custom_cupertino_tabbar.dart';
-import 'package:cube_timer_oficial/features/timer/presentation/widgets/widgets.dart';
+import 'package:cube_timer_oficial/shared/widgets/bottom_nav_bar/ios_bottom_nav_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cube_timer_oficial/shared/providers/theme_providers/cupertino_theme.provider.dart';
+
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKeyIos = GlobalKey<ScaffoldState>();
@@ -22,11 +22,11 @@ class TimerIOSPage extends ConsumerStatefulWidget {
 }
 
 class _TimerIOSPageState extends ConsumerState<TimerIOSPage> {
-  bool isTimeRunning = false;
   int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    final isTimeRunning = ref.watch(timerRunningProvider).isRunning;
     final cupertinoTheme = ref.watch(cupertinoThemeProvider);
     final gradientColors = cupertinoTheme.gradientColors;
     final Color textColor =
@@ -122,22 +122,34 @@ class _TimerIOSPageState extends ConsumerState<TimerIOSPage> {
         SafeArea(
           top: true,
           bottom: true,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 70.0, bottom: 40.0),
-            child: Column(
-              children: <Widget>[
-                if (_selectedIndex == 0) CronometerSubpage(),
-                if (_selectedIndex == 1) TimesSubpage(),
-                if (_selectedIndex == 2) StatisticsSubpage(),
-              ],
-            ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              // Animate padding when isTimeRunning changes
+              return AnimatedPadding(
+                duration: const Duration(milliseconds: 350),
+                curve: Curves.easeInOut,
+                padding: isTimeRunning
+                    ? EdgeInsets.zero
+                    : const EdgeInsets.only(top: 70.0, bottom: 40.0),
+                child: SizedBox(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                  child: _selectedIndex == 0
+                      ? CronometerSubpage(height: constraints.maxHeight)
+                      : _selectedIndex == 1
+                      ? TimesSubpage()
+                      : StatisticsSubpage(),
+                ),
+              );
+            },
           ),
         ),
         Positioned(
           left: 0,
           right: 0,
           bottom: 0,
-          child: CustomCupertinoTabBar(
+          child: BottomNavBarIos(
+            isTimerRunning: isTimeRunning,
             currentIndex: _selectedIndex,
             onTap: (index) {
               setState(() {

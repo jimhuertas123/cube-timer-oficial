@@ -7,3 +7,4 @@ export 'selected_cube_type.provider.dart';
 export 'cube_type.provider.dart';
 export 'navigation.provider.dart';
 export 'selected_menu_index.provider.dart';
+export 'timer_running.provider.dart';
